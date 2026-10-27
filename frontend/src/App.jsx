@@ -1,7 +1,7 @@
 ﻿import React, { useState } from 'react';
 import { Flame, Handshake, Boxes, Package, Megaphone, ShoppingCart, Wallet, Bell, Plug, GraduationCap, Store, Settings, Search, ShieldCheck, CheckCircle2, Lock, Mail, CreditCard, Sparkles, ArrowRight, Crown } from 'lucide-react';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://forneshop-j67a-eta.vercel.app';
 
 // Configuração oficial dos teus planos na Cakto
 const PLANS = {
