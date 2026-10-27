@@ -1,6 +1,9 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { Flame, Handshake, Boxes, Package, Store, Settings, Search, ShieldCheck, LogOut, ShoppingCart, Wallet, GraduationCap } from 'lucide-react';
+import Integracoes from './pages/integracoes.jsx';
 
+
+<Route path="/app/integracoes" element={<Integracoes />} />
 const API_URL = ''; // Rotas relativas para comunicar diretamente com as Serverless Functions da Vercel
 
 const PLANS = {
