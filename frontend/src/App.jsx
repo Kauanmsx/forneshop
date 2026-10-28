@@ -534,7 +534,7 @@ export default function App() {
     setAuthError('');
 
     const caktoUrl = selectedPlan === 'lifetime'
-      ? `https://pay.cakto.com.br/76kkd89_1244008?name=${encodeURIComponent(buyerName)}&email=${encodeURIComponent(buyerEmail)}`
+      ? `https://pay.cakto.com.br/76kkd89_12440081?name=${encodeURIComponent(buyerName)}&email=${encodeURIComponent(buyerEmail)}`
       : `https://pay.cakto.com.br/ue8mrsx?name=${encodeURIComponent(buyerName)}&email=${encodeURIComponent(buyerEmail)}`;
     
     window.location.href = caktoUrl;
