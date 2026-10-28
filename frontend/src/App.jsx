@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import {
-  Flame, Boxes, Package, Megaphone, ShoppingCart,
+  Flame, Boxes, Package, Megaphone, ShoppingCartcheckoutUrl,
   Wallet, Plug, Store, Settings, Search,
   Plus, RefreshCw, Trash2, CheckCircle2, AlertCircle,
   ExternalLink, CreditCard, ShieldCheck, Truck, LogOut, Menu, X,
@@ -535,7 +535,7 @@ export default function App() {
 
     const caktoUrl = selectedPlan === 'vitalicio'
       ? `https://pay.cakto.com.br/forneshop-vitalicio?name=${encodeURIComponent(buyerName)}&email=${encodeURIComponent(buyerEmail)}`
-      : `https://pay.cakto.com.br/forneshop-mensal?name=${encodeURIComponent(buyerName)}&email=${encodeURIComponent(buyerEmail)}`;
+      : `https://pay.cakto.com.br/ue8mrsx`;
 
     window.location.href = caktoUrl;
   };
