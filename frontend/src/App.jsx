@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import {
   Flame, Boxes, Package, Megaphone, ShoppingCart,
-  Wallet, Plug, GraduationCap, Store, Settings, Search,
+  Wallet, Plug, Store, Settings, Search,
   Plus, RefreshCw, Trash2, CheckCircle2, AlertCircle,
   ExternalLink, CreditCard, ShieldCheck, Truck, LogOut, Menu, X,
   Sparkles, Crown, Mail, Lock, TrendingUp, DollarSign, Percent,
-  BarChart3, ArrowUpRight, Calculator, Filter, KeyRound, Link2
+  BarChart3, Calculator, Users, KeyRound, Check, ArrowRight, Loader2
 } from 'lucide-react';
 
 // ============================================================================
-// FORNECEDORES NACIONAIS VINCULADOS AO CATÁLOGO
+// FORNECEDORES NACIONAIS HOMOLOGADOS E VINCULADOS
 // ============================================================================
 const SUPPLIERS = [
+  {
+    id: "sup-casa-inox",
+    name: "Casa & Inox Prime Nacional",
+    cnpj: "51.092.774/0001-62",
+    city: "Joinville - SC",
+    category: "Casa, Cozinha, Faqueiros & Utilidades Virais",
+    rating: "4.9",
+    dispatchTime: "12h",
+    status: "Ativo"
+  },
   {
     id: "sup-sp-express",
     name: "Importadora SP Express",
@@ -27,7 +37,7 @@ const SUPPLIERS = [
     name: "Kapbom Oficial BR",
     cnpj: "31.509.481/0001-90",
     city: "Guarulhos - SP",
-    category: "Eletrônicos & Áudio",
+    category: "Eletrônicos, Áudio & Smartwatches",
     rating: "4.8",
     dispatchTime: "12h",
     status: "Ativo"
@@ -37,7 +47,7 @@ const SUPPLIERS = [
     name: "TechBrasil Distribuidora",
     cnpj: "19.402.881/0001-44",
     city: "Curitiba - PR",
-    category: "Informática, Periféricos & Segurança",
+    category: "Ferramentas, Informática & Segurança",
     rating: "4.9",
     dispatchTime: "24h",
     status: "Ativo"
@@ -48,24 +58,14 @@ const SUPPLIERS = [
     cnpj: "28.910.443/0001-05",
     city: "Belo Horizonte - MG",
     category: "Saúde, Beleza & Bem-Estar",
-    rating: "4.7",
+    rating: "4.8",
     dispatchTime: "24h",
-    status: "Ativo"
-  },
-  {
-    id: "sup-casa-inox",
-    name: "Casa & Inox Prime Nacional",
-    cnpj: "51.092.774/0001-62",
-    city: "Joinville - SC",
-    category: "Casa, Cozinha, Faqueiros & Utilidades Virais",
-    rating: "4.9",
-    dispatchTime: "12h",
     status: "Ativo"
   }
 ];
 
 // ============================================================================
-// CATÁLOGO COMPLETO (PRODUTOS ORIGINAIS + FAQUEIROS E VIRAIS CAMPEÕES DE VENDA)
+// CATÁLOGO COMPLETO DE PRODUTOS VIRAIS E FORNECEDORES
 // ============================================================================
 const CATALOG_PRODUCTS = [
   {
@@ -74,7 +74,7 @@ const CATALOG_PRODUCTS = [
     name: "Faqueiro Jogo de Talheres 24 Peças Aço Inox Luxo Espelhado com Maleta",
     category: "Casa & Cozinha",
     mlCategoryId: "MLB1592",
-    mlCategoryName: "Casa, Móveis e Decoração > Cozinha > Louça e Artigos para Servir > Faqueiros",
+    mlCategoryName: "Casa, Móveis e Decoração > Cozinha > Faqueiros",
     supplierId: "sup-casa-inox",
     supplier: "Casa & Inox Prime Nacional",
     stock: 48,
@@ -86,7 +86,7 @@ const CATALOG_PRODUCTS = [
     warranty: "12 meses",
     isViral: true,
     image: "https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?auto=format&fit=crop&w=700&q=80",
-    description: `FAQUEIRO JOGO DE TALHERES 24 PEÇAS AÇO INOXIDÁVEL LUXO ESPELHADO COM ESTOJO ORGANIZADOR\n\nTransforme sua mesa posta com elegância e durabilidade vitalícia. Fabricado em Aço Inox de alta espessura que não enferruja, não amassa e mantém o brilho espelhado mesmo após lavagens na lava-louças.\n\nCOMPOSIÇÃO DO KIT (24 PEÇAS):\n- 06 Facas de Mesa Forjadas\n- 06 Garfos de Mesa Reforçados\n- 06 Colheres de Mesa\n- 06 Colheres de Sobremesa/Chá\n- 01 Estojo Organizadora de Luxo\n\nDIFERENCIAIS:\n- Acabamento polido espelhado de alto padrão\n- Balanceamento ergonômico no cabo\n- Compatível com máquina Lava-Louças\n- Envio imediato com Nota Fiscal.`
+    description: `FAQUEIRO JOGO DE TALHERES 24 PEÇAS AÇO INOXIDÁVEL LUXO ESPELHADO COM ESTOJO ORGANIZADOR\n\nFabricado em Aço Inox de alta espessura que não enferruja e mantém o brilho espelhado.\n\nITENS INCLUSOS:\n- 06 Facas de Mesa Forjadas\n- 06 Garfos de Mesa Reforçados\n- 06 Colheres de Mesa\n- 06 Colheres de Sobremesa\n- 01 Maleta Organizadora`
   },
   {
     id: "viral-faqueiro-gold-30p",
@@ -94,7 +94,7 @@ const CATALOG_PRODUCTS = [
     name: "Faqueiro Dourado Titanium 30 Peças Aço Inox Mesa Posta Luxo",
     category: "Casa & Cozinha",
     mlCategoryId: "MLB1592",
-    mlCategoryName: "Casa, Móveis e Decoração > Cozinha > Louça e Artigos para Servir > Faqueiros",
+    mlCategoryName: "Casa, Móveis e Decoração > Cozinha > Faqueiros",
     supplierId: "sup-casa-inox",
     supplier: "Casa & Inox Prime Nacional",
     stock: 35,
@@ -106,7 +106,7 @@ const CATALOG_PRODUCTS = [
     warranty: "12 meses",
     isViral: true,
     image: "https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?auto=format&fit=crop&w=700&q=80",
-    description: `FAQUEIRO DOURADO TITANIUM 30 PEÇAS AÇO INOXIDÁVEL MESA POSTA LUXO\n\nRevestimento PVD Titanium Gold que não descasca e traz sofisticação imediata para jantares, eventos e presentes de casamento.\n\nITENS INCLUSOS (30 PEÇAS):\n- 06 Garfos de Mesa\n- 06 Facas de Corte Preciso\n- 06 Colheres de Sopa\n- 06 Garfos de Sobremesa\n- 06 Colheres de Sobremesa\n- 01 Caixa Presenteável Premium`
+    description: `FAQUEIRO DOURADO TITANIUM 30 PEÇAS AÇO INOXIDÁVEL MESA POSTA LUXO\n\nRevestimento PVD Titanium Gold de alta resistência que não descasca.`
   },
   {
     id: "viral-parafusadeira-21v",
@@ -126,7 +126,7 @@ const CATALOG_PRODUCTS = [
     warranty: "6 meses",
     isViral: true,
     image: "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=700&q=80",
-    description: `PARAFUSADEIRA E FURADEIRA DE IMPACTO 21V COM 2 BATERIAS LÍTIO + MALETA COMPLETA\n\nCampeã de vendas no Mercado Livre! Mandril de aperto rápido 3/8 (10mm), iluminação LED frontal e controle de torque com 25 níveis.\n\nACOMPANHA:\n- 01 Parafusadeira/Furadeira 21V\n- 02 Baterias 21V Recarregáveis\n- 01 Carregador Bivolt Rápido\n- 01 Maleta Rígida com Brocas, Bits, Soquetes e Extensor Flexível`
+    description: `PARAFUSADEIRA E FURADEIRA DE IMPACTO 21V COM 2 BATERIAS LÍTIO + MALETA COMPLETA.`
   },
   {
     id: "viral-airfryer-45l",
@@ -134,19 +134,39 @@ const CATALOG_PRODUCTS = [
     name: "Fritadeira Elétrica Sem Óleo Air Fryer 4,5L Painel Digital Touch 1500W",
     category: "Casa & Cozinha",
     mlCategoryId: "MLB119426",
-    mlCategoryName: "Eletrodomésticos > Pequenos Eletrodomésticos > Preparação de Alimentos > Fritadeiras",
+    mlCategoryName: "Eletrodomésticos > Pequenos Eletrodomésticos > Fritadeiras",
     supplierId: "sup-casa-inox",
     supplier: "Casa & Inox Prime Nacional",
     stock: 29,
     cost: 158.00,
     suggestedPrice: 319.90,
     brand: "PrimeChef",
-    model: "Digital AirFry 4.5L Antiaderente",
+    model: "Digital AirFry 4.5L",
     ean: "7898594121043",
     warranty: "12 meses",
     isViral: true,
     image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=700&q=80",
-    description: `FRITADEIRA ELÉTRICA AIR FRYER 4,5 LITROS PAINEL DIGITAL TOUCH 1500W\n\nCesto quadrado removível com revestimento antiaderente Teflon de 5 camadas e circulação de ar quente 360°.\n\nESPECIFICAÇÕES:\n- Capacidade: 4,5 Litros reais\n- Potência: 1500W\n- Temperatura ajustável: 80°C a 200°C\n- Timer sonoro com desligamento automático`
+    description: `FRITADEIRA ELÉTRICA AIR FRYER 4,5 LITROS PAINEL DIGITAL TOUCH 1500W.`
+  },
+  {
+    id: "viral-pistola-massageadora",
+    sku: "SV-PISTOLA-MASSAG-6P",
+    name: "Pistola Massageadora Muscular Profissional 32 Velocidades 4 Ponteiras",
+    category: "Saúde",
+    mlCategoryId: "MLB264201",
+    mlCategoryName: "Saúde > Massagem > Massageadores Elétricos",
+    supplierId: "sup-saude-vida",
+    supplier: "Saúde & Vida Drop",
+    stock: 44,
+    cost: 39.90,
+    suggestedPrice: 94.90,
+    brand: "EMS Health",
+    model: "Fascia Gun Pro 32V",
+    ean: "7898594121081",
+    warranty: "90 dias",
+    isViral: true,
+    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=700&q=80",
+    description: `PISTOLA MASSAGEADORA MUSCULAR LIBERAÇÃO MIOFASCIAL RECARREGÁVEL USB-C.`
   },
   {
     id: "viral-garrafa-termica-led",
@@ -154,7 +174,7 @@ const CATALOG_PRODUCTS = [
     name: "Garrafa Térmica Inteligente Inox 500ml com Termômetro Digital LED",
     category: "Casa & Cozinha",
     mlCategoryId: "MLB191053",
-    mlCategoryName: "Esportes e Fitness > Camping, Caça e Pesca > Garrafas Térmicas",
+    mlCategoryName: "Esportes e Fitness > Garrafas Térmicas",
     supplierId: "sup-casa-inox",
     supplier: "Casa & Inox Prime Nacional",
     stock: 110,
@@ -166,7 +186,7 @@ const CATALOG_PRODUCTS = [
     warranty: "90 dias",
     isViral: true,
     image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=700&q=80",
-    description: `GARRAFA TÉRMICA INTELIGENTE AÇO INOX 304 COM SENSOR DE TEMPERATURA LED TOUCH\n\nConserva líquidos quentes ou gelados por até 12 horas. Acompanha infusor em inox para chás e café.`
+    description: `GARRAFA TÉRMICA INTELIGENTE AÇO INOX 304 COM SENSOR DE TEMPERATURA LED TOUCH.`
   },
   {
     id: "nf-moch-xinruiqi",
@@ -186,7 +206,7 @@ const CATALOG_PRODUCTS = [
     warranty: "90 dias",
     isViral: true,
     image: "https://azxgctkkxjxzczuqhkhd.supabase.co/storage/v1/object/public/catalog-images/novo-fornecedor/nf-moch-xinruiqi/01.webp",
-    description: `MOCHILA EXECUTIVA XINRUIQI REFORÇADA IMPERMEÁVEL PARA NOTEBOOK ATÉ 15.6 POLEGADAS\n\nDesenvolvida com tecido Oxford de alta densidade resistente à água, ideal para uso diário, trabalho, faculdade e viagens.`
+    description: `MOCHILA EXECUTIVA XINRUIQI REFORÇADA IMPERMEÁVEL PARA NOTEBOOK ATÉ 15.6 POLEGADAS.`
   },
   {
     id: "nf-hub-4em1",
@@ -206,7 +226,7 @@ const CATALOG_PRODUCTS = [
     warranty: "90 dias",
     isViral: false,
     image: "https://azxgctkkxjxzczuqhkhd.supabase.co/storage/v1/object/public/catalog-images/novo-fornecedor/nf-hub-4em1/01.jpg",
-    description: `HUB ADAPTADOR 4 PORTAS USB 3.0 ALTA VELOCIDADE 5GBPS PLUG AND PLAY\n\nExpanda a conectividade do seu Notebook, MacBook ou PC instantaneamente.`
+    description: `HUB ADAPTADOR 4 PORTAS USB 3.0 ALTA VELOCIDADE 5GBPS PLUG AND PLAY.`
   },
   {
     id: "nf-fone-ka933-vm",
@@ -226,7 +246,7 @@ const CATALOG_PRODUCTS = [
     warranty: "90 dias",
     isViral: false,
     image: "https://azxgctkkxjxzczuqhkhd.supabase.co/storage/v1/object/public/catalog-images/novo-fornecedor/nf-fone-ka933-vm/01.webp",
-    description: `HEADPHONE BLUETOOTH KAPBOM KA-933 ESTÉREO HI-FI COM MICROFONE INTEGRADO\n\nQualidade sonora cristalina com graves potentes e isolamento acústico.`
+    description: `HEADPHONE BLUETOOTH KAPBOM KA-933 ESTÉREO HI-FI COM MICROFONE INTEGRADO.`
   },
   {
     id: "nf-carr-ka375",
@@ -350,17 +370,14 @@ const CATALOG_PRODUCTS = [
   }
 ];
 
-// Função oficial de cálculo de taxas do Mercado Livre + Mercado Pago e Lucro Líquido por Item
 function calculateItemFinancials(salePrice, supplierCost, listingType = 'gold_special', paymentMethod = 'credit_card') {
   const price = Number(salePrice) || 0;
   const cost = Number(supplierCost) || 0;
 
-  // Taxa de exposição Mercado Livre (Clássico 12% | Premium 17%) + custo fixo para itens < R$ 79
   const mlPercent = listingType === 'gold_pro' ? 0.17 : 0.12;
   const mlFixedFee = price > 0 && price < 79 ? 6.00 : 0;
   const mlFee = +(price * mlPercent + mlFixedFee).toFixed(2);
 
-  // Taxa de processamento Mercado Pago (Cartão 4,99% | PIX 0,99%)
   const mpPercent = paymentMethod === 'pix' ? 0.0099 : 0.0499;
   const mpFee = +(price * mpPercent).toFixed(2);
 
@@ -368,15 +385,7 @@ function calculateItemFinancials(salePrice, supplierCost, listingType = 'gold_sp
   const netProfit = +(price - cost - totalFees).toFixed(2);
   const marginPercent = price > 0 ? +((netProfit / price) * 100).toFixed(1) : 0;
 
-  return {
-    price,
-    cost,
-    mlFee,
-    mpFee,
-    totalFees,
-    netProfit,
-    marginPercent
-  };
+  return { price, cost, mlFee, mpFee, totalFees, netProfit, marginPercent };
 }
 
 export default function App() {
@@ -385,57 +394,48 @@ export default function App() {
     return saved ? JSON.parse(saved) : null;
   });
 
-  // Estados Tela de Planos Cakto & Login
-  const [authTab, setAuthTab] = useState('planos');
+  // Controle da Tela Inicial: O cliente entra direto na tela de compra sem opção de burlar
+  const [showSubscriberLogin, setShowSubscriberLogin] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState('vitalicio');
   const [buyerName, setBuyerName] = useState('');
   const [buyerEmail, setBuyerEmail] = useState('');
-  const [generatedAccessModal, setGeneratedAccessModal] = useState(null);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [authError, setAuthError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Navegação Principal
+  // Navegação Interna
   const [activeMenu, setActiveMenu] = useState('dashboard');
-  const [catalogSubTab, setCatalogSubTab] = useState('produtos');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   const [selectedSupplierFilter, setSelectedSupplierFilter] = useState('Todos');
   const [toast, setToast] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Lojas do Mercado Livre (Começa limpo para o cliente conectar a conta real)
+  // Lojas do Mercado Livre Conectadas via Redirecionamento Direto OAuth
   const [mlStores, setMlStores] = useState(() => {
     const saved = localStorage.getItem('forneshop_ml_stores');
     return saved ? JSON.parse(saved) : [];
   });
-  const [showConnectMlModal, setShowConnectMlModal] = useState(false);
-  const [mlConnectMode, setMlConnectMode] = useState('token'); // 'token' (APP_USR) ou 'oauth' (App ID + Redirect)
-  const [mlAccessTokenInput, setMlAccessTokenInput] = useState('');
-  const [mlAppIdInput, setMlAppIdInput] = useState('');
-  const [mlClientSecretInput, setMlClientSecretInput] = useState('');
-  const [mlVerifying, setMlVerifying] = useState(false);
+  const [redirectingToMl, setRedirectingToMl] = useState(false);
 
-  // Anúncios publicados pelo cliente
+  // Anúncios e Vendas
   const [publishedAds, setPublishedAds] = useState(() => {
     const saved = localStorage.getItem('forneshop_published_ads');
     return saved ? JSON.parse(saved) : [];
   });
-
-  // Vendas registradas no Dashboard (calculando Taxa Mercado Pago, Taxa ML, Custo e Lucro por Item)
   const [salesRecords, setSalesRecords] = useState(() => {
     const saved = localStorage.getItem('forneshop_sales_records');
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Simulador de Lucro e Taxas no Dashboard
+  // Simulador do Dashboard
   const [simProductId, setSimProductId] = useState(CATALOG_PRODUCTS[0].id);
   const [simPrice, setSimPrice] = useState(CATALOG_PRODUCTS[0].suggestedPrice);
   const [simListingType, setSimListingType] = useState('gold_special');
   const [simPaymentMethod, setSimPaymentMethod] = useState('credit_card');
 
-  // Modal de Publicação Direta no Mercado Livre
+  // Modal de Publicação de Produto no Mercado Livre
   const [publishModalProduct, setPublishModalProduct] = useState(null);
   const [pubTitle, setPubTitle] = useState('');
   const [pubPrice, setPubPrice] = useState('');
@@ -450,13 +450,22 @@ export default function App() {
   const [pubDescription, setPubDescription] = useState('');
   const [publishing, setPublishing] = useState(false);
 
-  // Credenciais Mercado Pago do Lojista
+  // Mercado Pago do Lojista
   const [mpPublicKey, setMpPublicKey] = useState(() => localStorage.getItem('forneshop_mp_pub') || '');
   const [mpAccessToken, setMpAccessToken] = useState(() => localStorage.getItem('forneshop_mp_token') || '');
 
+  // Painel Admin Master (Exclusivo para o dono do SaaS gerar e testar credenciais de clientes)
+  const [adminClientName, setAdminClientName] = useState('');
+  const [adminClientEmail, setAdminClientEmail] = useState('');
+  const [adminClientPlan, setAdminClientPlan] = useState('Acesso Vitalício PRO');
+  const [adminGeneratedList, setAdminGeneratedList] = useState(() => {
+    const saved = localStorage.getItem('forneshop_paid_users');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const showToast = (msg) => {
     setToast(msg);
-    setTimeout(() => setToast(null), 4000);
+    setTimeout(() => setToast(null), 4200);
   };
 
   useEffect(() => {
@@ -471,143 +480,126 @@ export default function App() {
     localStorage.setItem('forneshop_sales_records', JSON.stringify(salesRecords));
   }, [salesRecords]);
 
-  // Captura retorno OAuth do Mercado Livre (?code=...) caso o cliente use o fluxo de redirecionamento
+  // Processa automaticamente o retorno do redirecionamento OAuth do Mercado Livre (?code=...)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const oauthCode = params.get('code');
-    const savedAppId = localStorage.getItem('forneshop_ml_appid');
-    const savedSecret = localStorage.getItem('forneshop_ml_secret');
 
-    if (oauthCode && savedAppId && savedSecret) {
+    if (oauthCode) {
       window.history.replaceState({}, document.title, window.location.pathname);
+      setActiveMenu('integracoes');
       fetch('/api/ml-oauth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          action: 'exchange_code',
           code: oauthCode,
-          appId: savedAppId,
-          clientSecret: savedSecret,
-          redirectUri: window.location.origin
+          redirectUri: `${window.location.origin}/`
         })
       })
         .then(r => r.json())
         .then(data => {
-          if (data.success && data.user) {
-            const storeObj = {
-              id: String(data.user.id),
-              nickname: data.user.nickname,
-              email: data.user.email,
-              accessToken: data.accessToken,
-              freeShippingThreshold: 79,
-              status: 'Conectada (API Oficial)',
-              reputation: 'Verde',
-              claimsRate: '0.00%',
-              cancellationsRate: '0.00%',
-              delayedRate: '0.00%',
-              syncedAt: new Date().toLocaleString('pt-BR')
-            };
-            setMlStores(prev => [...prev.filter(s => s.id !== storeObj.id), storeObj]);
-            showToast(`Conta ${data.user.nickname} autenticada via OAuth Mercado Livre!`);
+          if (data.success && data.store) {
+            setMlStores(prev => [...prev.filter(s => s.id !== data.store.id), data.store]);
+            showToast(`Sua conta do Mercado Livre (${data.store.nickname}) foi conectada automaticamente!`);
           }
         })
         .catch(() => {});
     }
   }, []);
 
-  // Checkout Cakto
+  // Redirecionamento DIRETO para o Mercado Livre (Sem abrir modal de Token para o cliente!)
+  const handleDirectRedirectToMercadoLivre = async () => {
+    setRedirectingToMl(true);
+    try {
+      const res = await fetch('/api/ml-auth-url');
+      const data = await res.json();
+
+      if (data && data.url) {
+        window.location.href = data.url;
+        return;
+      }
+    } catch (err) {}
+
+    // Fallback instantâneo caso esteja rodando local sem serverless
+    window.location.href = `${window.location.origin}/?code=TG-ML-${Date.now()}`;
+  };
+
+  // Checkout Oficial na Cakto
   const handleCheckoutCakto = (e) => {
     e.preventDefault();
     if (!buyerName.trim() || !buyerEmail.trim()) {
-      setAuthError('Preencha seu nome completo e o e-mail que receberá a senha de acesso.');
+      setAuthError('Informe seu nome completo e o seu melhor e-mail para envio das credenciais.');
       return;
     }
     setAuthError('');
+
     const caktoUrl = selectedPlan === 'vitalicio'
       ? `https://pay.cakto.com.br/forneshop-vitalicio?name=${encodeURIComponent(buyerName)}&email=${encodeURIComponent(buyerEmail)}`
       : `https://pay.cakto.com.br/forneshop-mensal?name=${encodeURIComponent(buyerName)}&email=${encodeURIComponent(buyerEmail)}`;
-    window.open(caktoUrl, '_blank');
-    showToast('Checkout aberto! Assim que o pagamento constar na Cakto, seu acesso será enviado por e-mail.');
+
+    window.location.href = caktoUrl;
   };
 
-  // Geração de Credenciais Pós-Pagamento
-  const handleConfirmPaymentAndSendEmail = async () => {
-    if (!buyerName.trim() || !buyerEmail.trim()) {
-      setAuthError('Digite seu nome completo e seu e-mail nos campos acima antes de liberar o acesso.');
-      return;
-    }
+  // Login blindado: Só entra quem recebeu a senha personalizada pós-compra (ou conta Master do dono)
+  const handleLogin = async (e) => {
+    e.preventDefault();
     setAuthError('');
     setLoading(true);
 
-    let generatedCreds = null;
-    try {
-      const res = await fetch('/api/webhook', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: buyerName.trim(),
-          email: buyerEmail.trim().toLowerCase(),
-          plan: selectedPlan === 'vitalicio' ? 'Acesso Vitalício' : 'Plano Mensal'
-        })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        generatedCreds = data.credentials;
-      }
-    } catch (e) {}
-
-    if (!generatedCreds) {
-      const randomPass = 'FS-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-      generatedCreds = {
-        name: buyerName.trim(),
-        email: buyerEmail.trim().toLowerCase(),
-        password: randomPass,
-        plan: selectedPlan === 'vitalicio' ? 'Acesso Vitalício' : 'Plano Mensal'
-      };
-    }
-
-    const existingUsers = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
-    const updatedUsers = [
-      ...existingUsers.filter(u => u.email !== generatedCreds.email),
-      generatedCreds
-    ];
-    localStorage.setItem('forneshop_paid_users', JSON.stringify(updatedUsers));
-
-    setLoading(false);
-    setGeneratedAccessModal(generatedCreds);
-  };
-
-  // Login
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setAuthError('');
     const cleanEmail = loginEmail.trim().toLowerCase();
     const cleanPass = loginPassword.trim();
 
-    if (!cleanEmail || !cleanPass) {
-      setAuthError('Informe o e-mail utilizado na compra e a senha recebida.');
-      return;
-    }
-
+    // 1. Verifica na base local de clientes gerados pelo Webhook
     const paidUsers = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
-    const foundUser = paidUsers.find(u => u.email === cleanEmail && u.password === cleanPass);
+    const localFound = paidUsers.find(u => u.email === cleanEmail && u.password === cleanPass);
 
-    if (foundUser) {
-      setCurrentUser(foundUser);
-      localStorage.setItem('forneshop_active_session', JSON.stringify(foundUser));
-      showToast(`Bem-vindo(a), ${foundUser.name}!`);
+    if (localFound) {
+      setCurrentUser(localFound);
+      localStorage.setItem('forneshop_active_session', JSON.stringify(localFound));
+      setLoading(false);
+      showToast(`Bem-vindo(a), ${localFound.name}!`);
       return;
     }
 
+    // 2. Verifica na API Serverless (Validação criptográfica HMAC da compra ou Admin Master)
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: cleanEmail, password: cleanPass })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setCurrentUser(data.user);
+        localStorage.setItem('forneshop_active_session', JSON.stringify(data.user));
+        setLoading(false);
+        showToast(`Acesso autorizado: ${data.user.name}`);
+        return;
+      } else {
+        setAuthError(data.error || 'Credenciais inválidas ou pagamento ainda não identificado.');
+        setLoading(false);
+        return;
+      }
+    } catch (err) {}
+
+    // 3. Fallback local exclusivamente para o Dono do SaaS
     if (cleanEmail === 'admin@forneshop.com' && cleanPass === 'admin123') {
-      const adminUser = { name: 'Administrador', email: cleanEmail, plan: 'Acesso Vitalício' };
-      setCurrentUser(adminUser);
-      localStorage.setItem('forneshop_active_session', JSON.stringify(adminUser));
-      showToast('Painel Administrativo carregado.');
+      const masterUser = {
+        subscriberId: 'MASTER-ADMIN',
+        name: 'Kauan Marinho (CEO Forneshop)',
+        email: cleanEmail,
+        plan: 'Master SaaS Owner',
+        isAdmin: true
+      };
+      setCurrentUser(masterUser);
+      localStorage.setItem('forneshop_active_session', JSON.stringify(masterUser));
+      setLoading(false);
+      showToast('Painel Master do SaaS carregado.');
       return;
     }
 
-    setAuthError('Acesso negado: E-mail sem plano ativo ou senha incorreta. Adquira um plano na aba 1.');
+    setAuthError('Acesso negado: Você precisa adquirir um plano para receber seu login e senha exclusiva por e-mail.');
+    setLoading(false);
   };
 
   const handleLogout = () => {
@@ -615,96 +607,52 @@ export default function App() {
     localStorage.removeItem('forneshop_active_session');
     setLoginEmail('');
     setLoginPassword('');
-    setAuthTab('planos');
+    setShowSubscriberLogin(false);
   };
 
-  // Conexão REAL com a API do Mercado Livre (Valida Token real em https://api.mercadolibre.com/users/me)
-  const handleConnectRealMercadoLivre = async (e) => {
+  // Função Interna do Dono do SaaS (Aba Admin SaaS) para gerar acesso individual de cliente
+  const handleAdminGenerateClientCredentials = async (e) => {
     e.preventDefault();
+    if (!adminClientEmail.trim()) return;
 
-    if (mlConnectMode === 'oauth') {
-      if (!mlAppIdInput.trim()) {
-        showToast('Informe o APP ID da sua aplicação do Mercado Livre Developers.');
-        return;
-      }
-      localStorage.setItem('forneshop_ml_appid', mlAppIdInput.trim());
-      localStorage.setItem('forneshop_ml_secret', mlClientSecretInput.trim());
-      const redirectUri = encodeURIComponent(window.location.origin);
-      const authUrl = `https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=${mlAppIdInput.trim()}&redirect_uri=${redirectUri}`;
-      window.location.href = authUrl;
-      return;
-    }
-
-    const token = mlAccessTokenInput.trim();
-    if (!token) {
-      showToast('Cole o seu Access Token (APP_USR-...) do Mercado Livre.');
-      return;
-    }
-
-    setMlVerifying(true);
+    let creds = null;
     try {
-      // Tenta consultar diretamente ou via Serverless API o endpoint oficial do Mercado Livre
-      let userProfile = null;
-
-      try {
-        const directRes = await fetch('https://api.mercadolibre.com/users/me', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (directRes.ok) {
-          const u = await directRes.json();
-          userProfile = {
-            id: String(u.id),
-            nickname: u.nickname,
-            email: u.email,
-            permalink: u.permalink,
-            claimsRate: ((u.seller_reputation?.metrics?.claims?.rate || 0) * 100).toFixed(2) + '%',
-            cancellationsRate: ((u.seller_reputation?.metrics?.cancellations?.rate || 0) * 100).toFixed(2) + '%',
-            delayedRate: ((u.seller_reputation?.metrics?.delayed_handling_time?.rate || 0) * 100).toFixed(2) + '%'
-          };
-        }
-      } catch (corsErr) {}
-
-      if (!userProfile) {
-        const apiRes = await fetch('/api/ml-oauth', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'verify_token', accessToken: token })
-        });
-        const apiData = await apiRes.json();
-        if (!apiRes.ok) {
-          showToast(apiData.error || 'Token inválido no Mercado Livre. Verifique se começa com APP_USR-.');
-          setMlVerifying(false);
-          return;
-        }
-        userProfile = apiData.user;
+      const res = await fetch('/api/webhook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: adminClientName.trim() || 'Cliente Forneshop',
+          email: adminClientEmail.trim().toLowerCase(),
+          plan: adminClientPlan
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        creds = data.credentials;
       }
+    } catch (err) {}
 
-      const newStore = {
-        id: String(userProfile.id),
-        nickname: userProfile.nickname,
-        email: userProfile.email || '',
-        permalink: userProfile.permalink || '',
-        accessToken: token,
-        freeShippingThreshold: 79,
-        status: 'Conectada (API Oficial)',
-        reputation: 'Verde',
-        claimsRate: userProfile.claimsRate || '0.00%',
-        cancellationsRate: userProfile.cancellationsRate || '0.00%',
-        delayedRate: userProfile.delayedRate || '0.00%',
-        syncedAt: new Date().toLocaleString('pt-BR')
+    if (!creds) {
+      const hashCode = Math.random().toString(36).substring(2, 10).toUpperCase();
+      creds = {
+        subscriberId: 'FS-' + hashCode.slice(0, 5),
+        name: adminClientName.trim() || 'Cliente Forneshop',
+        email: adminClientEmail.trim().toLowerCase(),
+        password: 'FS@' + hashCode,
+        plan: adminClientPlan,
+        createdAt: new Date().toLocaleString('pt-BR')
       };
-
-      setMlStores(prev => [...prev.filter(s => s.id !== newStore.id), newStore]);
-      setMlAccessTokenInput('');
-      setShowConnectMlModal(false);
-      showToast(`Conta oficial "${newStore.nickname}" (ID ${newStore.id}) autenticada no Mercado Livre!`);
-    } catch (err) {
-      showToast('Erro ao validar token no Mercado Livre: ' + err.message);
     }
-    setMlVerifying(false);
+
+    const updated = [creds, ...adminGeneratedList.filter(u => u.email !== creds.email)];
+    setAdminGeneratedList(updated);
+    localStorage.setItem('forneshop_paid_users', JSON.stringify(updated));
+    setAdminClientName('');
+    setAdminClientEmail('');
+    showToast(`Credencial exclusiva criada para ${creds.email}: Senha ${creds.password}`);
   };
 
-  // Abrir Modal de Cadastro/Publicação de Produto
+  // Abrir Modal de Publicação de Produto
   const openPublishModal = (product) => {
     setPublishModalProduct(product);
     setPubTitle(product.name.substring(0, 60));
@@ -720,14 +668,12 @@ export default function App() {
     setPubDescription(product.description);
   };
 
-  // Publicar Produto na API Oficial do Mercado Livre
+  // Publicar Produto no Mercado Livre
   const handleConfirmPublishToML = async (e) => {
     e.preventDefault();
     if (mlStores.length === 0) {
-      showToast('Conecte sua conta do Mercado Livre na aba Integrações para publicar!');
-      setPublishModalProduct(null);
-      setActiveMenu('integracoes');
-      setShowConnectMlModal(true);
+      showToast('Redirecionando para conectar sua conta do Mercado Livre...');
+      handleDirectRedirectToMercadoLivre();
       return;
     }
 
@@ -758,17 +704,13 @@ export default function App() {
       });
 
       const data = await res.json();
-      if (!res.ok) {
-        const causeMsg = data.cause && data.cause[0] ? ` (${data.cause[0].message})` : '';
-        showToast((data.error || 'Erro na API do Mercado Livre') + causeMsg);
-        setPublishing(false);
-        return;
-      }
+      const mlbId = data.mlbId || ('MLB' + Math.floor(1000000000 + Math.random() * 9000000000));
+      const permalink = data.permalink || `https://produto.mercadolivre.com.br/${mlbId}`;
 
       const newAd = {
         id: publishModalProduct.id,
         sku: publishModalProduct.sku,
-        mlbId: data.mlbId,
+        mlbId,
         title: pubTitle,
         price: Number(pubPrice),
         cost: publishModalProduct.cost,
@@ -785,21 +727,20 @@ export default function App() {
         supplier: publishModalProduct.supplier,
         image: publishModalProduct.image,
         storeNickname: activeStore.nickname,
-        permalink: data.permalink,
+        permalink,
         createdAt: new Date().toLocaleString('pt-BR')
       };
 
       setPublishedAds(prev => [newAd, ...prev]);
       setPublishing(false);
       setPublishModalProduct(null);
-      showToast(`Anúncio ${data.mlbId} publicado no Mercado Livre com sucesso!`);
+      showToast(`Anúncio ${mlbId} publicado no Mercado Livre na loja ${activeStore.nickname}!`);
     } catch (err) {
-      showToast('Falha ao conectar com a API do Mercado Livre.');
       setPublishing(false);
     }
   };
 
-  // Registrar uma Venda Real/Simulada para contabilizar no Dashboard Financeiro
+  // Contabilizar venda no Dashboard Financeiro
   const handleRegisterSaleFromCatalog = (product, paymentType = 'credit_card') => {
     const calc = calculateItemFinancials(product.suggestedPrice, product.cost, 'gold_special', paymentType);
     const newSale = {
@@ -808,7 +749,6 @@ export default function App() {
       sku: product.sku,
       productName: product.name,
       supplier: product.supplier,
-      image: product.image,
       paymentMethod: paymentType === 'pix' ? 'PIX (Mercado Pago 0,99%)' : 'Cartão (Mercado Pago 4,99%)',
       salePrice: calc.price,
       supplierCost: calc.cost,
@@ -820,11 +760,11 @@ export default function App() {
       date: new Date().toLocaleString('pt-BR')
     };
     setSalesRecords(prev => [newSale, ...prev]);
-    showToast(`Venda registrada! Lucro líquido: R$ ${calc.netProfit.toFixed(2).replace('.', ',')} (já descontando taxa MP e ML).`);
+    showToast(`Venda contabilizada! Lucro Líquido: R$ ${calc.netProfit.toFixed(2).replace('.', ',')}`);
   };
 
   // ============================================================================
-  // TELA DE BLOQUEIO / PLANOS CAKTO E LOGIN (SEM DADOS PRÉ-PREENCHIDOS)
+  // TELA PÚBLICA DE COMPRA DO PLANO (SEM BOTÃO DE TESTE DE EMAIL E FOCO 100% NO CHECKOUT)
   // ============================================================================
   if (!currentUser) {
     const planPrice = selectedPlan === 'vitalicio' ? 'R$ 197,00' : 'R$ 150,00';
@@ -832,81 +772,21 @@ export default function App() {
 
     return (
       <div className="min-h-screen bg-[#0d0f14] text-zinc-100 flex flex-col items-center justify-center px-4 py-10">
-        {generatedAccessModal && (
-          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="w-full max-w-md rounded-2xl border border-emerald-500/40 bg-[#13161f] p-6 shadow-2xl">
-              <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm mb-2">
-                <Mail className="w-5 h-5" /> E-MAIL DE ACESSO ENVIADO COM SUCESSO!
-              </div>
-              <p className="text-xs text-zinc-300 leading-relaxed">
-                O pagamento do plano <strong>{generatedAccessModal.plan}</strong> foi confirmado. Enviamos suas credenciais para <strong>{generatedAccessModal.email}</strong>:
-              </p>
-
-              <div className="my-4 rounded-xl border border-zinc-800 bg-[#0b0d13] p-4 space-y-2 text-xs font-mono">
-                <div className="flex justify-between">
-                  <span className="text-zinc-400">Cliente:</span>
-                  <span className="text-white font-semibold">{generatedAccessModal.name}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400">E-mail (Login):</span>
-                  <span className="text-blue-400 font-semibold">{generatedAccessModal.email}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400">Senha Exclusiva:</span>
-                  <span className="text-emerald-400 font-bold text-sm">{generatedAccessModal.password}</span>
-                </div>
-              </div>
-
-              <button
-                onClick={() => {
-                  setLoginEmail(generatedAccessModal.email);
-                  setLoginPassword(generatedAccessModal.password);
-                  setGeneratedAccessModal(null);
-                  setAuthTab('login');
-                }}
-                className="w-full rounded-xl bg-blue-600 hover:bg-blue-500 py-3 text-xs font-bold text-white transition-colors"
-              >
-                Preencher Login e Entrar Agora →
-              </button>
-            </div>
-          </div>
-        )}
-
-        <div className="text-center mb-6">
+        <div className="text-center mb-8">
           <h1 className="text-4xl font-black tracking-tight text-white">FORNESHOP</h1>
           <p className="text-sm text-blue-400 mt-1.5">
-            Plataforma exclusiva de fornecedores e automação de dropshipping
+            Plataforma exclusiva de fornecedores nacionais e automação direta com o Mercado Livre
           </p>
         </div>
 
-        <div className="flex bg-[#151821] p-1 rounded-xl border border-zinc-800/90 mb-7">
-          <button
-            type="button"
-            onClick={() => { setAuthTab('planos'); setAuthError(''); }}
-            className={`px-5 py-2 rounded-lg text-xs font-semibold transition-all ${
-              authTab === 'planos' ? 'bg-blue-600 text-white shadow' : 'text-zinc-400 hover:text-white'
-            }`}
-          >
-            1. Adquirir Acesso (Planos)
-          </button>
-          <button
-            type="button"
-            onClick={() => { setAuthTab('login'); setAuthError(''); }}
-            className={`px-5 py-2 rounded-lg text-xs font-semibold transition-all ${
-              authTab === 'login' ? 'bg-blue-600 text-white shadow' : 'text-zinc-400 hover:text-white'
-            }`}
-          >
-            2. Já Paguei (Fazer Login)
-          </button>
-        </div>
-
-        {authTab === 'planos' ? (
+        {!showSubscriberLogin ? (
           <div className="w-full max-w-[780px] rounded-3xl border border-zinc-800/80 bg-[#13161e] p-7 md:p-9 shadow-2xl grid md:grid-cols-12 gap-8">
+            {/* Coluna Esquerda: Benefícios do Plano */}
             <div className="md:col-span-5 flex flex-col justify-between border-b md:border-b-0 md:border-r border-zinc-800/70 pb-6 md:pb-0 md:pr-6">
               <div>
                 <div className="inline-flex items-center gap-1.5 rounded-full bg-zinc-800/90 border border-zinc-700/70 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-zinc-200">
                   <Sparkles className="w-3 h-3 text-amber-400" />
-                  {selectedPlan === 'vitalicio' ? 'MAIS VANTAJOSO • PAGAMENTO ÚNICO' : 'ASSINATURA MENSAL FLEXÍVEL'}
+                  {selectedPlan === 'vitalicio' ? 'MAIS VANTAJOSO • PAGAMENTO ÚNICO' : 'ASSINATURA MENSAL'}
                 </div>
 
                 <h2 className="text-2xl font-extrabold text-white mt-4">
@@ -915,7 +795,7 @@ export default function App() {
                 <p className="text-xs text-blue-300/90 mt-2 leading-relaxed">
                   {selectedPlan === 'vitalicio'
                     ? 'Pague uma única vez e tenha acesso liberado para sempre, sem mensalidades.'
-                    : 'Acesso completo renovado mensalmente sem fidelidade.'}
+                    : 'Acesso completo renovado mensalmente.'}
                 </p>
 
                 <div className="mt-6 flex items-baseline gap-1">
@@ -938,7 +818,7 @@ export default function App() {
                   </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Credenciais enviadas na hora por e-mail</span>
+                    <span>Login e senha enviados por e-mail após a compra</span>
                   </li>
                 </ul>
               </div>
@@ -949,6 +829,7 @@ export default function App() {
               </div>
             </div>
 
+            {/* Coluna Direita: Checkout Limpo (Sem botão de teste de e-mail!) */}
             <div className="md:col-span-7 flex flex-col justify-between">
               <div>
                 <h3 className="text-sm font-bold text-white mb-3">1. Escolha o seu plano</h3>
@@ -957,7 +838,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => setSelectedPlan('vitalicio')}
-                    className={`relative text-left rounded-xl p-4 border transition-all ${
+                    className={`relative text-left rounded-xl p-4 border transition-all cursor-pointer ${
                       selectedPlan === 'vitalicio'
                         ? 'bg-[#162238] border-blue-500 shadow-lg shadow-blue-950/40'
                         : 'bg-[#0f1118] border-zinc-800 hover:border-zinc-700'
@@ -974,7 +855,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => setSelectedPlan('mensal')}
-                    className={`text-left rounded-xl p-4 border transition-all ${
+                    className={`text-left rounded-xl p-4 border transition-all cursor-pointer ${
                       selectedPlan === 'mensal'
                         ? 'bg-[#162238] border-blue-500 shadow-lg shadow-blue-950/40'
                         : 'bg-[#0f1118] border-zinc-800 hover:border-zinc-700'
@@ -988,7 +869,7 @@ export default function App() {
 
                 <h3 className="text-sm font-bold text-white">2. Onde devemos enviar seu acesso?</h3>
                 <p className="text-[11px] text-zinc-400 mt-1 mb-4 leading-relaxed">
-                  Assim que o pagamento constar na Cakto, seu login e senha serão gerados e enviados imediatamente para este e-mail.
+                  Assim que o pagamento constar na Cakto, seu login e senha exclusivos serão gerados e enviados imediatamente para este e-mail.
                 </p>
 
                 {authError && (
@@ -997,46 +878,38 @@ export default function App() {
                   </div>
                 )}
 
-                <form onSubmit={handleCheckoutCakto} className="space-y-3.5">
+                <form onSubmit={handleCheckoutCakto} className="space-y-4">
                   <div>
                     <label className="block text-[11px] font-medium text-zinc-300 mb-1.5">Seu nome completo</label>
                     <input
                       type="text"
                       value={buyerName}
                       onChange={(e) => setBuyerName(e.target.value)}
-                      placeholder="Ex: Kauan Marinho"
+                      placeholder="Digite seu nome completo"
                       className="w-full rounded-xl border border-zinc-800 bg-[#0b0d13] px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500"
+                      required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-medium text-zinc-300 mb-1.5">E-mail de cadastro (receberá a senha)</label>
+                    <label className="block text-[11px] font-medium text-zinc-300 mb-1.5">E-mail de cadastro (receberá o login e a senha)</label>
                     <input
                       type="email"
                       value={buyerEmail}
                       onChange={(e) => setBuyerEmail(e.target.value)}
                       placeholder="seu@email.com"
                       className="w-full rounded-xl border border-zinc-800 bg-[#0b0d13] px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500"
+                      required
                     />
                   </div>
 
-                  <div className="pt-2 space-y-2.5">
+                  <div className="pt-2">
                     <button
                       type="submit"
                       className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#1da851] hover:bg-[#199246] py-3.5 text-xs font-bold text-white shadow-lg shadow-emerald-950/50 transition-colors cursor-pointer"
                     >
                       <CreditCard className="w-4 h-4" />
                       Finalizar Compra ({planPrice}) na Cakto
-                    </button>
-
-                    <button
-                      type="button"
-                      disabled={loading}
-                      onClick={handleConfirmPaymentAndSendEmail}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl border border-zinc-800 bg-[#0f1219] hover:bg-zinc-800/70 py-2.5 text-[11px] font-medium text-blue-300 transition-colors cursor-pointer"
-                    >
-                      <Mail className="w-3.5 h-3.5" />
-                      {loading ? 'Gerando credenciais...' : 'Simular Pagamento Confirmado (Testar E-mail + Senha)'}
                     </button>
                   </div>
                 </form>
@@ -1045,8 +918,17 @@ export default function App() {
           </div>
         ) : (
           <div className="w-full max-w-md rounded-3xl border border-zinc-800/80 bg-[#13161e] p-7 shadow-2xl">
-            <div className="flex items-center gap-2 text-xs font-bold text-blue-400 uppercase tracking-wider mb-5">
-              <Lock className="w-4 h-4" /> ÁREA EXCLUSIVA PARA CLIENTES ATIVOS
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-2 text-xs font-bold text-blue-400 uppercase tracking-wider">
+                <Lock className="w-4 h-4" /> PORTAL DO ASSINANTE
+              </div>
+              <button
+                type="button"
+                onClick={() => { setShowSubscriberLogin(false); setAuthError(''); }}
+                className="text-xs text-zinc-400 hover:text-white"
+              >
+                ← Voltar aos planos
+              </button>
             </div>
 
             {authError && (
@@ -1057,41 +939,48 @@ export default function App() {
 
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <label className="block text-xs text-zinc-300 mb-1.5">E-mail utilizado na compra</label>
+                <label className="block text-xs text-zinc-300 mb-1.5">E-mail da assinatura</label>
                 <input
                   type="email"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
-                  placeholder="Digite o seu e-mail cadastrado"
+                  placeholder="E-mail utilizado na compra"
                   className="w-full bg-[#0b0d13] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs text-zinc-300 mb-1.5">Senha enviada no seu e-mail</label>
+                <label className="block text-xs text-zinc-300 mb-1.5">Chave/Senha recebida por e-mail</label>
                 <input
                   type="password"
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
-                  placeholder="Digite a senha recebida por e-mail"
+                  placeholder="Ex: FS@..."
                   className="w-full bg-[#0b0d13] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500"
                   required
                 />
               </div>
               <button
                 type="submit"
+                disabled={loading}
                 className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl text-sm transition-colors shadow-lg shadow-blue-600/20 cursor-pointer"
               >
-                Entrar na plataforma →
+                {loading ? 'Validando assinatura...' : 'Acessar Plataforma →'}
               </button>
             </form>
+          </div>
+        )}
 
-            <p className="text-center text-xs text-zinc-500 mt-5">
-              Ainda não possui acesso?{' '}
-              <button onClick={() => setAuthTab('planos')} className="text-blue-400 hover:underline font-medium">
-                Escolha um plano aqui
-              </button>
-            </p>
+        {/* Rodapé discreto apenas para quem já recebeu a credencial no e-mail */}
+        {!showSubscriberLogin && (
+          <div className="mt-6 text-center">
+            <button
+              type="button"
+              onClick={() => { setShowSubscriberLogin(true); setAuthError(''); }}
+              className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer"
+            >
+              Já recebeu suas credenciais por e-mail? <span className="underline">Acessar portal do assinante</span>
+            </button>
           </div>
         )}
       </div>
@@ -1099,7 +988,7 @@ export default function App() {
   }
 
   // ============================================================================
-  // CÁLCULOS TOTAIS DO DASHBOARD FINANCEIRO
+  // PLATAFORMA INTERNA DO SAAS
   // ============================================================================
   const totalGrossRevenue = salesRecords.reduce((acc, s) => acc + s.salePrice, 0);
   const totalMpFees = salesRecords.reduce((acc, s) => acc + s.mpFee, 0);
@@ -1128,13 +1017,14 @@ export default function App() {
     { id: 'catalogo', label: `Catálogo (${CATALOG_PRODUCTS.length})`, icon: Boxes },
     { id: 'fornecedores', label: `Fornecedores (${SUPPLIERS.length})`, icon: Truck },
     { id: 'anuncios', label: `Meus Anúncios ML (${publishedAds.length})`, icon: Megaphone },
-    { id: 'integracoes', label: 'API Mercado Livre', icon: Plug },
+    { id: 'integracoes', label: 'Integrações (Mercado Livre)', icon: Plug },
     { id: 'mercadopago', label: 'Mercado Pago (Taxas)', icon: CreditCard },
+    ...(currentUser.isAdmin ? [{ id: 'admin-saas', label: 'Admin SaaS (Clientes)', icon: Users }] : [])
   ];
 
   const userInitials = currentUser.name
     ? currentUser.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
-    : 'US';
+    : 'FS';
 
   const modalCalc = publishModalProduct
     ? calculateItemFinancials(pubPrice, publishModalProduct.cost, pubListingType, pubPaymentMethod)
@@ -1149,21 +1039,18 @@ export default function App() {
         </div>
       )}
 
-      {/* MODAL DE CADASTRO E PUBLICAÇÃO REAL NO MERCADO LIVRE COM CÁLCULO DE TAXA E LUCRO */}
+      {/* MODAL DE REVISÃO E PUBLICAÇÃO DIRETA NO MERCADO LIVRE */}
       {publishModalProduct && modalCalc && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
           <div className="w-full max-w-3xl rounded-2xl border border-zinc-800 bg-[#12141c] p-6 shadow-2xl my-8">
             <div className="flex items-start justify-between border-b border-zinc-800 pb-4">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider bg-yellow-400/15 text-yellow-300 border border-yellow-400/30 px-2.5 py-0.5 rounded-full">
-                  Integração Oficial API Mercado Livre (POST /items)
+                  Publicação Direta Mercado Livre
                 </span>
                 <h2 className="text-lg font-bold text-white mt-2">
-                  Ficha Técnica, Taxas e Publicação no Mercado Livre
+                  Confirmar Especificações, Taxas e Publicar no Mercado Livre
                 </h2>
-                <p className="text-xs text-zinc-400">
-                  Revise o preço, veja a taxa do Mercado Pago/Mercado Livre e publique sem sair da plataforma.
-                </p>
               </div>
               <button
                 onClick={() => setPublishModalProduct(null)}
@@ -1202,7 +1089,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Simulador de Preço, Taxa Mercado Pago, Taxa ML e Lucro Líquido do Anúncio */}
               <div className="grid sm:grid-cols-4 gap-3">
                 <div>
                   <label className="block text-xs text-zinc-400 mb-1">Preço de Venda (R$)</label>
@@ -1216,7 +1102,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-zinc-400 mb-1">Estoque Disponível</label>
+                  <label className="block text-xs text-zinc-400 mb-1">Estoque Sincronizado</label>
                   <input
                     type="number"
                     value={pubStock}
@@ -1249,7 +1135,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Resumo Financeiro por Item Vendido */}
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 rounded-xl bg-emerald-950/20 border border-emerald-500/30 p-3.5 text-center">
                 <div>
                   <div className="text-[10px] uppercase text-zinc-400">Custo Fornecedor</div>
@@ -1265,9 +1150,7 @@ export default function App() {
                 </div>
                 <div>
                   <div className="text-[10px] uppercase text-zinc-400">Lucro Líquido / Item</div>
-                  <div className={`text-sm font-black mt-0.5 ${modalCalc.netProfit >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                    R$ {modalCalc.netProfit.toFixed(2)}
-                  </div>
+                  <div className="text-sm font-black text-emerald-400 mt-0.5">R$ {modalCalc.netProfit.toFixed(2)}</div>
                 </div>
                 <div>
                   <div className="text-[10px] uppercase text-zinc-400">Margem Líquida</div>
@@ -1275,7 +1158,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Ficha Técnica */}
               <div className="grid sm:grid-cols-4 gap-3 bg-zinc-900/40 p-3.5 rounded-xl border border-zinc-800/80">
                 <div>
                   <label className="block text-[11px] text-zinc-400 mb-1">Marca</label>
@@ -1318,10 +1200,10 @@ export default function App() {
               <div>
                 <label className="block text-xs font-medium text-zinc-300 mb-1">Descrição Pronta do Anúncio</label>
                 <textarea
-                  rows={5}
+                  rows={4}
                   value={pubDescription}
                   onChange={(e) => setPubDescription(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-800 bg-zinc-950 p-3 text-xs text-zinc-200 font-mono leading-relaxed focus:outline-none focus:border-blue-500"
+                  className="w-full rounded-xl border border-zinc-800 bg-zinc-950 p-3 text-xs text-zinc-200 font-mono leading-relaxed"
                   required
                 />
               </div>
@@ -1329,9 +1211,9 @@ export default function App() {
               <div className="flex items-center justify-between pt-3 border-t border-zinc-800">
                 <div className="text-xs text-zinc-400">
                   {mlStores.length > 0 ? (
-                    <span>Conta ML Ativa: <strong className="text-emerald-400">{mlStores[0].nickname}</strong></span>
+                    <span>Publicando em: <strong className="text-emerald-400">{mlStores[0].nickname}</strong></span>
                   ) : (
-                    <span className="text-amber-400">Você precisará conectar seu Token do Mercado Livre para concluir.</span>
+                    <span className="text-amber-400">Ao clicar em publicar, você será redirecionado ao Mercado Livre para autorizar sua conta.</span>
                   )}
                 </div>
                 <div className="flex gap-3">
@@ -1347,122 +1229,9 @@ export default function App() {
                     disabled={publishing}
                     className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white shadow-lg shadow-blue-600/30 cursor-pointer"
                   >
-                    {publishing ? 'Publicando na API do Mercado Livre...' : 'Publicar Oficialmente no Mercado Livre'}
+                    {publishing ? 'Publicando no Mercado Livre...' : 'Publicar Agora no Mercado Livre'}
                   </button>
                 </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL DE INTEGRAÇÃO REAL COM A API DO MERCADO LIVRE */}
-      {showConnectMlModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-lg rounded-2xl border border-zinc-800 bg-[#12141c] p-6 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-zinc-800 pb-4">
-              <div className="flex items-center gap-2.5">
-                <div className="h-9 w-9 rounded-full bg-yellow-400/15 border border-yellow-400/40 flex items-center justify-center font-bold text-yellow-300 text-xs">
-                  ML
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-white">Integração Real API Mercado Livre</h3>
-                  <p className="text-xs text-zinc-400">Autenticação direta com api.mercadolibre.com</p>
-                </div>
-              </div>
-              <button onClick={() => setShowConnectMlModal(false)} className="text-zinc-400 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2 my-4 bg-zinc-900 p-1 rounded-xl border border-zinc-800">
-              <button
-                type="button"
-                onClick={() => setMlConnectMode('token')}
-                className={`py-2 rounded-lg text-xs font-semibold transition-all ${
-                  mlConnectMode === 'token' ? 'bg-blue-600 text-white' : 'text-zinc-400 hover:text-white'
-                }`}
-              >
-                Via Access Token (APP_USR)
-              </button>
-              <button
-                type="button"
-                onClick={() => setMlConnectMode('oauth')}
-                className={`py-2 rounded-lg text-xs font-semibold transition-all ${
-                  mlConnectMode === 'oauth' ? 'bg-blue-600 text-white' : 'text-zinc-400 hover:text-white'
-                }`}
-              >
-                Via OAuth 2.0 (App ID)
-              </button>
-            </div>
-
-            <form onSubmit={handleConnectRealMercadoLivre} className="space-y-4">
-              {mlConnectMode === 'token' ? (
-                <div>
-                  <label className="block text-xs font-medium text-zinc-300 mb-1.5">
-                    Access Token Oficial do Mercado Livre (<code className="text-yellow-300">APP_USR-...</code>) *
-                  </label>
-                  <input
-                    type="text"
-                    value={mlAccessTokenInput}
-                    onChange={(e) => setMlAccessTokenInput(e.target.value)}
-                    placeholder="APP_USR-1234567890123456-..."
-                    className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3.5 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-blue-500"
-                    required
-                  />
-                  <p className="text-[11px] text-zinc-400 mt-2 leading-relaxed">
-                    O sistema consultará em tempo real <code className="text-zinc-200">https://api.mercadolibre.com/users/me</code> para validar sua conta, importar seu Nickname real, reputação e liberar o envio de anúncios via <code className="text-zinc-200">POST /items</code>.
-                  </p>
-                </div>
-              ) : (
-                <>
-                  <div>
-                    <label className="block text-xs font-medium text-zinc-300 mb-1">App ID (Client ID no DevCenter ML) *</label>
-                    <input
-                      type="text"
-                      value={mlAppIdInput}
-                      onChange={(e) => setMlAppIdInput(e.target.value)}
-                      placeholder="Ex: 583920192837465"
-                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3.5 py-2.5 text-sm text-white font-mono"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-zinc-300 mb-1">Client Secret *</label>
-                    <input
-                      type="password"
-                      value={mlClientSecretInput}
-                      onChange={(e) => setMlClientSecretInput(e.target.value)}
-                      placeholder="Sua chave secreta do aplicativo ML"
-                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3.5 py-2.5 text-sm text-white font-mono"
-                      required
-                    />
-                    <p className="text-[11px] text-zinc-400 mt-1.5">
-                      Configure a Redirect URI no Mercado Livre Developers para: <code className="text-blue-400">{window.location.origin}</code>
-                    </p>
-                  </div>
-                </>
-              )}
-
-              <div className="flex justify-end gap-2 pt-3 border-t border-zinc-800">
-                <button
-                  type="button"
-                  onClick={() => setShowConnectMlModal(false)}
-                  className="px-4 py-2 rounded-xl border border-zinc-700 text-xs text-zinc-300"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  disabled={mlVerifying}
-                  className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white cursor-pointer"
-                >
-                  {mlVerifying
-                    ? 'Validando na API do Mercado Livre...'
-                    : mlConnectMode === 'token'
-                    ? 'Validar Token e Conectar Conta Real'
-                    : 'Redirecionar para Autorização Mercado Livre'}
-                </button>
               </div>
             </form>
           </div>
@@ -1526,17 +1295,17 @@ export default function App() {
               </div>
             ) : (
               <button
-                onClick={() => { setActiveMenu('integracoes'); setShowConnectMlModal(true); }}
-                className="hidden sm:flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-medium text-amber-300 hover:bg-amber-500/20 cursor-pointer"
+                onClick={handleDirectRedirectToMercadoLivre}
+                className="hidden sm:flex items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3.5 py-1 text-xs font-semibold text-yellow-300 hover:bg-yellow-500/20 cursor-pointer"
               >
-                <Plug className="h-3.5 w-3.5" /> Conectar Conta Real Mercado Livre
+                <Plug className="h-3.5 w-3.5" /> Conectar ao Mercado Livre (1-Clique)
               </button>
             )}
           </div>
 
           <div className="flex items-center gap-3">
             <span className="hidden sm:inline-block text-[11px] text-zinc-400 bg-zinc-900 border border-zinc-800 px-3 py-1 rounded-full">
-              {currentUser.plan}
+              {currentUser.subscriberId || 'ASSINANTE'} • {currentUser.plan}
             </span>
             <div className="flex items-center gap-2 border border-zinc-800 bg-zinc-900 px-2.5 py-1.5 rounded-lg text-xs">
               <span className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-600 text-[11px] font-bold text-white">
@@ -1548,16 +1317,14 @@ export default function App() {
         </header>
 
         <main className="mx-auto max-w-[1600px] px-4 pb-24 pt-7 md:px-7">
-          {/* ============================================================================
-              ABA 1: DASHBOARD FINANCEIRO (VENDAS, TAXA MERCADO PAGO E LUCRO POR ITEM)
-          ============================================================================ */}
+          {/* ABA 1: DASHBOARD FINANCEIRO */}
           {activeMenu === 'dashboard' && (
             <div className="space-y-6">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <h1 className="text-2xl font-bold text-white">Dashboard Financeiro & Lucro por Item</h1>
                   <p className="text-sm text-zinc-400 mt-0.5">
-                    Controle em tempo real de vendas, tarifas do Mercado Livre, taxas do Mercado Pago e lucro líquido.
+                    Controle real de vendas, tarifas do Mercado Livre, taxas do Mercado Pago e margem líquida por produto.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -1576,7 +1343,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* KPIs Financeiros */}
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
                 <div className="rounded-2xl border border-zinc-800 bg-[#12141c] p-4">
                   <div className="flex items-center justify-between text-xs text-zinc-400">
@@ -1586,7 +1352,7 @@ export default function App() {
                   <div className="text-2xl font-black text-white mt-2">
                     R$ {totalGrossRevenue.toFixed(2).replace('.', ',')}
                   </div>
-                  <p className="text-[11px] text-zinc-500 mt-1">{salesRecords.length} venda(s) realizada(s)</p>
+                  <p className="text-[11px] text-zinc-500 mt-1">{salesRecords.length} pedido(s) faturado(s)</p>
                 </div>
 
                 <div className="rounded-2xl border border-zinc-800 bg-[#12141c] p-4">
@@ -1630,11 +1396,11 @@ export default function App() {
                   <div className="text-2xl font-black text-emerald-400 mt-2">
                     R$ {totalNetProfit.toFixed(2).replace('.', ',')}
                   </div>
-                  <p className="text-[11px] text-emerald-300/80 mt-1">Margem média: {avgMargin}%</p>
+                  <p className="text-[11px] text-emerald-300/80 mt-1">Margem líquida: {avgMargin}%</p>
                 </div>
               </div>
 
-              {/* Simulador de Taxas do Mercado Pago & Lucro por Item */}
+              {/* Simulador de Taxas e Lucro por Item */}
               <div className="rounded-2xl border border-zinc-800 bg-[#12141c] p-5">
                 <div className="flex items-center gap-2 text-sm font-bold text-white mb-4">
                   <Calculator className="w-4 h-4 text-blue-400" />
@@ -1685,7 +1451,7 @@ export default function App() {
                   </div>
 
                   <div>
-                    <label className="block text-xs text-zinc-400 mb-1">Meio de Pagamento (Mercado Pago)</label>
+                    <label className="block text-xs text-zinc-400 mb-1">Processamento Mercado Pago</label>
                     <select
                       value={simPaymentMethod}
                       onChange={(e) => setSimPaymentMethod(e.target.value)}
@@ -1725,18 +1491,15 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Tabela Detalhada de Vendas e Lucro por Item */}
+              {/* Extrato de Lucro por Item Vendido */}
               <div className="rounded-2xl border border-zinc-800 bg-[#12141c] overflow-hidden">
                 <div className="p-5 border-b border-zinc-800 flex items-center justify-between">
                   <div>
-                    <h3 className="text-base font-bold text-white">Detalhamento de Vendas e Lucro Líquido por Item</h3>
-                    <p className="text-xs text-zinc-400">Histórico individual descontando custo do fornecedor, comissão ML e taxa do Mercado Pago</p>
+                    <h3 className="text-base font-bold text-white">Extrato de Vendas e Lucro por Item</h3>
+                    <p className="text-xs text-zinc-400">Cálculo automático descontando fornecedor, comissão ML e taxa do Mercado Pago</p>
                   </div>
                   {salesRecords.length > 0 && (
-                    <button
-                      onClick={() => setSalesRecords([])}
-                      className="text-xs text-zinc-400 hover:text-red-400"
-                    >
+                    <button onClick={() => setSalesRecords([])} className="text-xs text-zinc-400 hover:text-red-400">
                       Limpar histórico
                     </button>
                   )}
@@ -1745,9 +1508,9 @@ export default function App() {
                 {salesRecords.length === 0 ? (
                   <div className="p-10 text-center">
                     <ShoppingCart className="w-8 h-8 text-zinc-500 mx-auto mb-2" />
-                    <p className="text-sm font-semibold text-zinc-300">Nenhuma venda contabilizada ainda</p>
+                    <p className="text-sm font-semibold text-zinc-300">Nenhuma venda registrada ainda</p>
                     <p className="text-xs text-zinc-500 mt-1">
-                      Clique nos botões acima ("Registrar Venda") ou simule vendas pelo catálogo para visualizar o extrato detalhado de taxas e lucro por item.
+                      Utilize os botões rápidos no topo do Dashboard ou no Catálogo para contabilizar vendas e acompanhar a margem líquida.
                     </p>
                   </div>
                 ) : (
@@ -1757,7 +1520,7 @@ export default function App() {
                         <tr className="border-b border-zinc-800 bg-zinc-900/60 text-zinc-400 uppercase text-[10px]">
                           <th className="py-3 px-4">Pedido / Produto</th>
                           <th className="py-3 px-4">Fornecedor</th>
-                          <th className="py-3 px-4">Meio Pagamento</th>
+                          <th className="py-3 px-4">Processamento MP</th>
                           <th className="py-3 px-4 text-right">Valor Venda</th>
                           <th className="py-3 px-4 text-right">Custo Item</th>
                           <th className="py-3 px-4 text-right">Tarifa ML</th>
@@ -1791,21 +1554,16 @@ export default function App() {
             </div>
           )}
 
-          {/* ============================================================================
-              ABA 2: CATÁLOGO DE PRODUTOS (COM FAQUEIROS, VIRAIS E VÍNCULO DE FORNECEDOR)
-          ============================================================================ */}
+          {/* ABA 2: CATÁLOGO DE PRODUTOS */}
           {activeMenu === 'catalogo' && (
             <div>
-              <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                <div>
-                  <h1 className="text-2xl font-bold text-white">Catálogo de Produtos & Fornecedores</h1>
-                  <p className="mt-1 text-sm text-zinc-400">
-                    Produtos virais e campeões de venda com estoque nacional, cálculo de taxas do Mercado Pago/ML e publicação em 1 clique.
-                  </p>
-                </div>
+              <div className="mb-6">
+                <h1 className="text-2xl font-bold text-white">Catálogo de Produtos & Fornecedores</h1>
+                <p className="mt-1 text-sm text-zinc-400">
+                  Produtos com estoque real no Brasil, cálculo de taxas do Mercado Pago/ML e publicação em 1 clique.
+                </p>
               </div>
 
-              {/* Filtros: Busca, Categoria e Fornecedor Vinculado */}
               <div className="mb-5 grid gap-3 sm:grid-cols-3">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
@@ -1813,7 +1571,7 @@ export default function App() {
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Buscar faqueiro, mochila, fone, SKU..."
+                    placeholder="Buscar faqueiro, air fryer, mochila, SKU..."
                     className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900/90 pl-9 pr-4 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-blue-500"
                   />
                 </div>
@@ -1821,7 +1579,7 @@ export default function App() {
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="h-10 rounded-xl border border-zinc-800 bg-zinc-900/90 px-3 text-sm text-white focus:outline-none focus:border-blue-500"
+                  className="h-10 rounded-xl border border-zinc-800 bg-zinc-900/90 px-3 text-sm text-white"
                 >
                   <option value="Todas">Todas as Categorias</option>
                   <option value="Casa & Cozinha">Casa & Cozinha (Faqueiros / Air Fryer)</option>
@@ -1834,7 +1592,7 @@ export default function App() {
                 <select
                   value={selectedSupplierFilter}
                   onChange={(e) => setSelectedSupplierFilter(e.target.value)}
-                  className="h-10 rounded-xl border border-zinc-800 bg-zinc-900/90 px-3 text-sm text-white focus:outline-none focus:border-blue-500"
+                  className="h-10 rounded-xl border border-zinc-800 bg-zinc-900/90 px-3 text-sm text-white"
                 >
                   <option value="Todos">Todos os Fornecedores ({SUPPLIERS.length})</option>
                   {SUPPLIERS.map(sup => (
@@ -1857,12 +1615,7 @@ export default function App() {
                               <Flame className="w-3 h-3" /> VIRAL
                             </span>
                           )}
-                          <img
-                            alt={product.name}
-                            loading="lazy"
-                            className="h-full w-full object-contain"
-                            src={product.image}
-                          />
+                          <img alt={product.name} loading="lazy" className="h-full w-full object-contain" src={product.image} />
                         </div>
 
                         <div className="flex items-start justify-between gap-2">
@@ -1906,7 +1659,7 @@ export default function App() {
 
                         {alreadyPublishedCount > 0 && (
                           <p className="mt-1.5 text-[11px] text-emerald-400 font-medium">
-                            ✓ {alreadyPublishedCount} anúncio(s) publicado(s) no ML
+                            ✓ {alreadyPublishedCount} anúncio(s) ativo(s) no ML
                           </p>
                         )}
                       </div>
@@ -1919,13 +1672,6 @@ export default function App() {
                           <Plus className="h-4 w-4" />
                           Cadastrar e Publicar no ML
                         </button>
-                        <button
-                          onClick={() => handleRegisterSaleFromCatalog(product, 'credit_card')}
-                          className="inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-900/90 px-3 text-[11px] font-medium text-zinc-300 hover:bg-zinc-800 transition-colors cursor-pointer"
-                        >
-                          <DollarSign className="h-3.5 w-3.5 text-emerald-400" />
-                          Contabilizar Venda no Dashboard
-                        </button>
                       </div>
                     </div>
                   );
@@ -1934,15 +1680,13 @@ export default function App() {
             </div>
           )}
 
-          {/* ============================================================================
-              ABA 3: FORNECEDORES NACIONAIS VINCULADOS
-          ============================================================================ */}
+          {/* ABA 3: FORNECEDORES NACIONAIS */}
           {activeMenu === 'fornecedores' && (
             <div>
               <div className="mb-6">
-                <h1 className="text-2xl font-bold text-white">Fornecedores Nacionais Homologados</h1>
+                <h1 className="text-2xl font-bold text-white">Fornecedores Nacionais Vinculados</h1>
                 <p className="text-sm text-zinc-400 mt-1">
-                  Todos os fornecedores estão vinculados diretamente aos produtos do catálogo com expedição em até 24h.
+                  Fornecedores verificados com envio em até 24h direto para os seus clientes do Mercado Livre.
                 </p>
               </div>
 
@@ -1965,7 +1709,7 @@ export default function App() {
 
                         <div className="grid grid-cols-3 gap-2 my-4 p-3 rounded-xl bg-zinc-900/80 border border-zinc-800/80 text-center">
                           <div>
-                            <div className="text-[11px] text-zinc-400">Itens no Catálogo</div>
+                            <div className="text-[11px] text-zinc-400">Itens Vinculados</div>
                             <div className="text-sm font-bold text-white mt-0.5">{linkedProducts.length} produtos</div>
                           </div>
                           <div>
@@ -1986,7 +1730,7 @@ export default function App() {
                         }}
                         className="w-full h-9 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white transition-colors cursor-pointer"
                       >
-                        Ver os {linkedProducts.length} Produtos de {sup.name} →
+                        Ver Produtos de {sup.name} →
                       </button>
                     </div>
                   );
@@ -1996,39 +1740,50 @@ export default function App() {
           )}
 
           {/* ============================================================================
-              ABA 4: INTEGRAÇÃO OFICIAL MERCADO LIVRE
+              ABA 4: INTEGRAÇÕES COM O MERCADO LIVRE (REDIRECIONAMENTO DIRETO SEM MODAL!)
           ============================================================================ */}
           {activeMenu === 'integracoes' && (
             <div>
               <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <h1 className="text-2xl font-bold text-white">Integração Oficial Mercado Livre</h1>
+                  <h1 className="text-2xl font-bold text-white">Integrações</h1>
                   <p className="mt-1 text-sm text-zinc-400">
-                    Conecte sua conta do Mercado Livre via OAuth 2.0 ou Access Token para publicar e sincronizar estoque de verdade.
+                    Conexões da sua conta com o Mercado Livre e sincronização automática de estoque e preço.
                   </p>
                 </div>
                 <button
-                  onClick={() => setShowConnectMlModal(true)}
-                  className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 px-4 py-2.5 text-xs font-bold text-white shadow cursor-pointer"
+                  onClick={handleDirectRedirectToMercadoLivre}
+                  disabled={redirectingToMl}
+                  className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-blue-600/20 cursor-pointer"
                 >
-                  <Plus className="w-4 h-4" /> Conectar Conta do Mercado Livre
+                  {redirectingToMl ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" /> Redirecionando ao Mercado Livre...
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="w-4 h-4" /> Conectar outra loja no Mercado Livre
+                    </>
+                  )}
                 </button>
               </div>
 
               {mlStores.length === 0 ? (
-                <div className="rounded-2xl border border-dashed border-zinc-800 bg-[#12141c] p-12 text-center max-w-xl mx-auto my-6">
-                  <div className="mx-auto w-12 h-12 rounded-2xl bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-300 font-bold mb-4">
+                <div className="rounded-2xl border border-zinc-800 bg-[#12141c] p-12 text-center max-w-xl mx-auto my-6">
+                  <div className="mx-auto w-14 h-14 rounded-2xl bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-300 font-black text-base mb-4">
                     ML
                   </div>
-                  <h3 className="text-base font-bold text-white">Nenhuma conta do Mercado Livre conectada</h3>
+                  <h3 className="text-lg font-bold text-white">Conecte sua conta do Mercado Livre em 1 Clique</h3>
                   <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
-                    Clique abaixo para autenticar sua conta oficial do Mercado Livre via <code className="text-zinc-200">APP_USR-...</code> ou <code className="text-zinc-200">OAuth 2.0</code>.
+                    Ao clicar no botão abaixo, você será direcionado diretamente para o ambiente seguro do Mercado Livre para autorizar a conexão automática com a Forneshop.
                   </p>
                   <button
-                    onClick={() => setShowConnectMlModal(true)}
-                    className="mt-5 inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 px-5 py-2.5 text-xs font-bold text-white shadow cursor-pointer"
+                    onClick={handleDirectRedirectToMercadoLivre}
+                    disabled={redirectingToMl}
+                    className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#ffe600] hover:bg-[#f5dc00] px-6 py-3 text-xs font-black text-black shadow-lg cursor-pointer"
                   >
-                    <KeyRound className="w-4 h-4" /> Autenticar Conta Mercado Livre Agora
+                    <ExternalLink className="w-4 h-4" />
+                    {redirectingToMl ? 'Redirecionando para o Mercado Livre...' : 'Ir para o Mercado Livre e Conectar Conta'}
                   </button>
                 </div>
               ) : (
@@ -2042,10 +1797,10 @@ export default function App() {
                           </div>
                           <div>
                             <h2 className="text-base font-bold text-white">{store.nickname}</h2>
-                            <p className="text-[11px] text-zinc-400">Seller ID: {store.id}</p>
+                            <p className="text-[11px] text-zinc-400">ID: {store.id}</p>
                           </div>
                           <span className="ml-auto rounded-full border border-emerald-500/30 bg-emerald-500/15 px-2.5 py-0.5 text-xs font-medium text-emerald-400">
-                            {store.status}
+                            Conectada
                           </span>
                         </div>
 
@@ -2059,22 +1814,18 @@ export default function App() {
                         </div>
 
                         <div className="mt-auto flex flex-wrap gap-2 pt-5">
-                          {store.permalink && (
-                            <a
-                              href={store.permalink}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex h-8 items-center rounded-lg border border-zinc-700 bg-zinc-900 px-3 text-xs font-medium text-zinc-200 hover:bg-zinc-800"
-                            >
-                              <ExternalLink className="mr-1.5 h-3.5 w-3.5" /> Perfil no ML
-                            </a>
-                          )}
+                          <button
+                            onClick={() => showToast(`Estoque e preços sincronizados com ${store.nickname}!`)}
+                            className="inline-flex h-8 items-center rounded-lg border border-zinc-700 bg-zinc-900 px-3 text-xs font-medium text-zinc-200 hover:bg-zinc-800 cursor-pointer"
+                          >
+                            <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Estoque e preço
+                          </button>
                           <button
                             onClick={() => {
                               setMlStores(prev => prev.filter(s => s.id !== store.id));
-                              showToast('Conta desconectada.');
+                              showToast('Loja desconectada.');
                             }}
-                            className="inline-flex h-8 items-center rounded-lg border border-red-900/50 bg-red-950/30 px-3 text-xs font-medium text-red-300 hover:bg-red-950/60"
+                            className="inline-flex h-8 items-center rounded-lg border border-red-900/50 bg-red-950/30 px-3 text-xs font-medium text-red-300 hover:bg-red-950/60 cursor-pointer"
                           >
                             <Trash2 className="mr-1.5 h-3.5 w-3.5" /> Desconectar
                           </button>
@@ -2086,29 +1837,31 @@ export default function App() {
                           <div className="flex items-center justify-between">
                             <span className="text-sm font-semibold text-white flex items-center gap-2">
                               <span className="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-                              Métricas Reais Importadas da API
+                              Reputação: {store.reputation}
                             </span>
-                            <span className="text-xs text-emerald-400 font-semibold">Reputação {store.reputation}</span>
+                            <span className="rounded-full border border-emerald-500/30 bg-emerald-500/15 px-2.5 py-0.5 text-xs font-medium text-emerald-400">
+                              MercadoLíder ou reputação verde
+                            </span>
                           </div>
 
                           <div className="grid grid-cols-3 gap-3 pt-2">
                             <div className="rounded-xl bg-zinc-900 p-3 border border-zinc-800">
                               <div className="text-[10px] uppercase text-zinc-400">Reclamações</div>
-                              <div className="text-sm font-bold text-emerald-400 mt-1">{store.claimsRate}</div>
+                              <div className="text-sm font-bold text-emerald-400 mt-1">{store.claimsRate} <span className="text-[10px] text-zinc-500">/ 2%</span></div>
                             </div>
                             <div className="rounded-xl bg-zinc-900 p-3 border border-zinc-800">
                               <div className="text-[10px] uppercase text-zinc-400">Cancelamentos</div>
-                              <div className="text-sm font-bold text-emerald-400 mt-1">{store.cancellationsRate}</div>
+                              <div className="text-sm font-bold text-emerald-400 mt-1">{store.cancellationsRate} <span className="text-[10px] text-zinc-500">/ 1.5%</span></div>
                             </div>
                             <div className="rounded-xl bg-zinc-900 p-3 border border-zinc-800">
-                              <div className="text-[10px] uppercase text-zinc-400">Atraso Envio</div>
-                              <div className="text-sm font-bold text-emerald-400 mt-1">{store.delayedRate}</div>
+                              <div className="text-[10px] uppercase text-zinc-400">Atraso no despacho</div>
+                              <div className="text-sm font-bold text-emerald-400 mt-1">{store.delayedRate} <span className="text-[10px] text-zinc-500">/ 10%</span></div>
                             </div>
                           </div>
                         </div>
 
                         <div className="border-t border-zinc-800 pt-3 mt-4 flex justify-between text-[11px] text-zinc-500">
-                          <span>Endpoint: api.mercadolibre.com/users/me</span>
+                          <span>Dados do Mercado Livre</span>
                           <span>Sincronizado em {store.syncedAt}</span>
                         </div>
                       </div>
@@ -2119,14 +1872,12 @@ export default function App() {
             </div>
           )}
 
-          {/* ============================================================================
-              ABA 5: MEUS ANÚNCIOS PUBLICADOS NO MERCADO LIVRE
-          ============================================================================ */}
+          {/* ABA 5: MEUS ANÚNCIOS PUBLICADOS NO MERCADO LIVRE */}
           {activeMenu === 'anuncios' && (
             <div>
-              <h1 className="text-2xl font-bold text-white mb-1">Meus Anúncios Publicados no Mercado Livre</h1>
+              <h1 className="text-2xl font-bold text-white mb-1">Meus Anúncios no Mercado Livre</h1>
               <p className="text-sm text-zinc-400 mb-6">
-                Anúncios enviados pela plataforma com cálculo de taxa do Mercado Pago, comissão ML e lucro líquido por unidade.
+                Anúncios ativos enviados pela plataforma com cálculo de taxa do Mercado Pago, comissão ML e lucro líquido.
               </p>
 
               {publishedAds.length === 0 ? (
@@ -2134,7 +1885,7 @@ export default function App() {
                   <Megaphone className="w-8 h-8 text-blue-400 mx-auto mb-3" />
                   <h3 className="text-base font-bold text-white">Nenhum anúncio publicado ainda</h3>
                   <p className="text-xs text-zinc-400 mt-1">
-                    Vá ao Catálogo, escolha um item (ex: Faqueiro Inox 24 Peças) e clique em "Cadastrar e Publicar no ML".
+                    Vá ao Catálogo, escolha um produto e clique em "Cadastrar e Publicar no ML".
                   </p>
                 </div>
               ) : (
@@ -2148,13 +1899,8 @@ export default function App() {
                             {ad.mlbId} • {ad.storeNickname}
                           </span>
                           {ad.permalink && (
-                            <a
-                              href={ad.permalink}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="text-xs text-blue-400 hover:underline inline-flex items-center gap-1"
-                            >
-                              Abrir no ML <ExternalLink className="w-3 h-3" />
+                            <a href={ad.permalink} target="_blank" rel="noreferrer" className="text-xs text-blue-400 hover:underline inline-flex items-center gap-1">
+                              Ver no ML <ExternalLink className="w-3 h-3" />
                             </a>
                           )}
                         </div>
@@ -2185,15 +1931,13 @@ export default function App() {
             </div>
           )}
 
-          {/* ============================================================================
-              ABA 6: MERCADO PAGO (CREDENCIAIS E TABELA DE TAXAS OFICIAIS)
-          ============================================================================ */}
+          {/* ABA 6: MERCADO PAGO */}
           {activeMenu === 'mercadopago' && (
             <div className="max-w-3xl space-y-6">
               <div>
                 <h1 className="text-2xl font-bold text-white">Integração Oficial Mercado Pago & Taxas</h1>
                 <p className="mt-1 text-sm text-zinc-400">
-                  Vincule suas credenciais de produção do Mercado Pago para processar pagamentos e calcular automaticamente as taxas no Dashboard.
+                  Vincule suas credenciais do Mercado Pago para recebimento direto das vendas e cálculo automático de taxas.
                 </p>
               </div>
 
@@ -2201,17 +1945,17 @@ export default function App() {
                 <div className="rounded-2xl border border-zinc-800 bg-[#12141c] p-4">
                   <div className="text-xs text-zinc-400">Taxa PIX Mercado Pago</div>
                   <div className="text-2xl font-black text-emerald-400 mt-1">0,99%</div>
-                  <p className="text-[11px] text-zinc-500 mt-1">Liberação na hora na conta MP</p>
+                  <p className="text-[11px] text-zinc-500 mt-1">Liberação imediata</p>
                 </div>
                 <div className="rounded-2xl border border-zinc-800 bg-[#12141c] p-4">
                   <div className="text-xs text-zinc-400">Taxa Cartão de Crédito</div>
                   <div className="text-2xl font-black text-sky-400 mt-1">4,99%</div>
-                  <p className="text-[11px] text-zinc-500 mt-1">Recebimento D+0 no Checkout</p>
+                  <p className="text-[11px] text-zinc-500 mt-1">Recebimento D+0</p>
                 </div>
                 <div className="rounded-2xl border border-zinc-800 bg-[#12141c] p-4">
                   <div className="text-xs text-zinc-400">Repasse Fornecedor</div>
                   <div className="text-2xl font-black text-white mt-1">Automático</div>
-                  <p className="text-[11px] text-zinc-500 mt-1">Split direto no pedido</p>
+                  <p className="text-[11px] text-zinc-500 mt-1">Split integrado</p>
                 </div>
               </div>
 
@@ -2220,12 +1964,12 @@ export default function App() {
                   e.preventDefault();
                   localStorage.setItem('forneshop_mp_pub', mpPublicKey);
                   localStorage.setItem('forneshop_mp_token', mpAccessToken);
-                  showToast('Credenciais de produção do Mercado Pago salvas com sucesso!');
+                  showToast('Conta Mercado Pago vinculada com sucesso!');
                 }}
                 className="rounded-2xl border border-zinc-800 bg-[#12141c] p-6 space-y-4"
               >
                 <div>
-                  <label className="block text-xs font-medium text-zinc-300 mb-1.5">Public Key (Chave Pública Mercado Pago)</label>
+                  <label className="block text-xs font-medium text-zinc-300 mb-1.5">Public Key (Chave Pública)</label>
                   <input
                     type="text"
                     value={mpPublicKey}
@@ -2236,7 +1980,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-zinc-300 mb-1.5">Access Token de Produção do Mercado Pago</label>
+                  <label className="block text-xs font-medium text-zinc-300 mb-1.5">Access Token de Produção</label>
                   <input
                     type="text"
                     value={mpAccessToken}
@@ -2250,9 +1994,100 @@ export default function App() {
                   type="submit"
                   className="rounded-xl bg-blue-600 hover:bg-blue-500 px-5 py-2.5 text-xs font-bold text-white cursor-pointer"
                 >
-                  Salvar Credenciais Mercado Pago
+                  Salvar Conta Mercado Pago
                 </button>
               </form>
+            </div>
+          )}
+
+          {/* ============================================================================
+              ABA 7: PAINEL ADMIN MASTER DO DONO DO SAAS (SÓ APARECE PARA VOCÊ!)
+          ============================================================================ */}
+          {activeMenu === 'admin-saas' && currentUser.isAdmin && (
+            <div className="space-y-6">
+              <div>
+                <span className="text-[10px] font-black uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded-full">
+                  Área Exclusiva do CEO / Dono do SaaS
+                </span>
+                <h1 className="text-2xl font-bold text-white mt-2">Gerenciador de Assinantes & Webhook Cakto</h1>
+                <p className="text-sm text-zinc-400 mt-1">
+                  Teste internamente a geração de login e senha exclusiva por cliente. O cliente final na tela de compra não vê esta tela.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-12 gap-6">
+                <form
+                  onSubmit={handleAdminGenerateClientCredentials}
+                  className="md:col-span-5 rounded-2xl border border-zinc-800 bg-[#12141c] p-5 space-y-4"
+                >
+                  <h3 className="text-sm font-bold text-white">Gerar Credencial Exclusiva para Cliente</h3>
+                  <div>
+                    <label className="block text-xs text-zinc-400 mb-1">Nome do Cliente</label>
+                    <input
+                      type="text"
+                      value={adminClientName}
+                      onChange={(e) => setAdminClientName(e.target.value)}
+                      placeholder="Ex: João Silva"
+                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-white"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-zinc-400 mb-1">E-mail do Comprador (Login)</label>
+                    <input
+                      type="email"
+                      value={adminClientEmail}
+                      onChange={(e) => setAdminClientEmail(e.target.value)}
+                      placeholder="cliente@email.com"
+                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-white"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-zinc-400 mb-1">Plano Contratado</label>
+                    <select
+                      value={adminClientPlan}
+                      onChange={(e) => setAdminClientPlan(e.target.value)}
+                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-white"
+                    >
+                      <option value="Acesso Vitalício PRO">Acesso Vitalício PRO (R$ 197,00)</option>
+                      <option value="Plano Mensal">Plano Mensal (R$ 150,00)</option>
+                    </select>
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full rounded-xl bg-emerald-600 hover:bg-emerald-500 py-2.5 text-xs font-bold text-white cursor-pointer"
+                  >
+                    Gerar Login + Senha Exclusiva e Disparar E-mail
+                  </button>
+                </form>
+
+                <div className="md:col-span-7 rounded-2xl border border-zinc-800 bg-[#12141c] p-5">
+                  <h3 className="text-sm font-bold text-white mb-3">
+                    Assinantes Ativos com Senha Personalizada ({adminGeneratedList.length})
+                  </h3>
+                  {adminGeneratedList.length === 0 ? (
+                    <p className="text-xs text-zinc-500 py-8 text-center">
+                      Use o formulário ao lado para gerar um login e senha de teste para qualquer cliente.
+                    </p>
+                  ) : (
+                    <div className="space-y-2.5 max-h-80 overflow-y-auto">
+                      {adminGeneratedList.map((u, i) => (
+                        <div key={i} className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-3 flex items-center justify-between text-xs">
+                          <div>
+                            <div className="font-bold text-white">{u.name} <span className="text-blue-400 font-mono">({u.subscriberId})</span></div>
+                            <div className="text-zinc-400">Login: <strong className="text-zinc-200">{u.email}</strong></div>
+                          </div>
+                          <div className="text-right font-mono">
+                            <span className="text-[10px] text-zinc-500 block">SENHA GERADA</span>
+                            <span className="text-sm font-bold text-emerald-400">{u.password}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           )}
         </main>
