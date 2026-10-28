@@ -533,10 +533,10 @@ export default function App() {
     }
     setAuthError('');
 
-    const caktoUrl = selectedPlan === 'lifetime'
-      ? `https://pay.cakto.com.br/ue8mrsx?name=${encodeURIComponent(buyerName)}&email=${encodeURIComponent(buyerEmail)}`
-      : `https://pay.cakto.com.br/76kkd89_1244008?name=${encodeURIComponent(buyerName)}&email=${encodeURIComponent(buyerEmail)}`;
-    
+    const caktoUrl = (selectedPlan === 'vitalicio' || selectedPlan === 'lifetime')
+      ? `https://pay.cakto.com.br/76kkd89_1244008?name=${encodeURIComponent(buyerName)}&email=${encodeURIComponent(buyerEmail)}`
+      : `https://pay.cakto.com.br/ue8mrsx?name=${encodeURIComponent(buyerName)}&email=${encodeURIComponent(buyerEmail)}`;
+
     window.location.href = caktoUrl;
   };
 
@@ -546,8 +546,26 @@ export default function App() {
     setAuthError('');
     setLoading(true);
 
-    const cleanEmail = loginEmail.trim().toLowerCase();
+        const cleanEmail = loginEmail.trim().toLowerCase();
     const cleanPass = loginPassword.trim();
+
+    try {
+      const authRes = await fetch('/api/auth-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: cleanEmail, password: cleanPass })
+      });
+      if (authRes.ok) {
+        const authData = await authRes.json();
+        if (authData && authData.valid) {
+          setCurrentUser(authData.user);
+          localStorage.setItem('forneshop_active_session', JSON.stringify(authData.user));
+          setLoading(false);
+          showToast(`Bem-vindo(a), ${authData.user.name}!`);
+          return;
+        }
+      }
+    } catch (err) {}
 
     // 1. Verifica na base local de clientes gerados pelo Webhook
     const paidUsers = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
@@ -2096,3 +2114,4 @@ export default function App() {
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
