@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   const cleanEmail = String(email).trim().toLowerCase();
   const cleanPass = String(password).trim().toUpperCase();
 
-  const secret = process.env.AUTH_SECRET || 'forneshop-master-secret-2026';
+  const secret = process.env.CAKTO_WEBHOOK_SECRET || process.env.AUTH_SECRET || 'forneshop-master-secret-2026';
   const expectedPassword = crypto
     .createHmac('sha256', secret)
     .update(cleanEmail)
