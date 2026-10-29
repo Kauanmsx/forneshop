@@ -31,7 +31,6 @@ export default async function handler(req, res) {
   let token = accessToken;
   let tokens = null;
 
-  // Chamada autenticada; se o token expirou (401) renova uma vez e repete.
   const ml = async (path, init = {}) => {
     const run = () => fetch(`${API}${path}`, {
       ...init,
@@ -54,7 +53,7 @@ export default async function handler(req, res) {
   };
 
   try {
-    // O Mercado Livre exige categoria "folha": descobrimos a correta pelo titulo.
+    // Categoria "folha" descoberta pelo titulo
     let categoryId = item.categoryId;
     try {
       const d = await ml(`/sites/MLB/domain_discovery/search?limit=1&q=${encodeURIComponent(item.title)}`);
@@ -67,8 +66,7 @@ export default async function handler(req, res) {
     if (item.model) attributes.push({ id: 'MODEL', value_name: item.model });
     if (validGtin(item.ean)) attributes.push({ id: 'GTIN', value_name: String(item.ean).replace(/\D/g, '') });
 
-    const body = {
-      title: String(item.title).slice(0, 60),
+    const baseBody = {
       category_id: categoryId,
       price: Number(item.price),
       currency_id: 'BRL',
@@ -84,8 +82,22 @@ export default async function handler(req, res) {
       ]
     };
 
-    const created = await ml('/items', { method: 'POST', body: JSON.stringify(body) });
-    const data = await created.json();
+    const name = String(item.title).slice(0, 60);
+    const send = (extra) => ml('/items', { method: 'POST', body: JSON.stringify({ ...baseBody, ...extra }) });
+
+    // Modelo novo (User Products): family_name, sem title
+    let created = await send({ family_name: name });
+    let data = await created.json();
+
+    // Conta ainda no modelo antigo: tenta com title
+    if (!created.ok) {
+      const txt = JSON.stringify(data);
+      if (/title/i.test(txt) && !/family_name/i.test(txt)) {
+        created = await send({ title: name });
+        data = await created.json();
+      }
+    }
+
     if (!created.ok) {
       const causes = (data.cause || []).map((c) => c.message).filter(Boolean).join(' | ');
       return res.status(400).json({
@@ -104,6 +116,7 @@ export default async function handler(req, res) {
     return res.status(200).json({
       success: true,
       mlbId: data.id,
+      title: data.title,
       permalink: data.permalink,
       status: data.status,
       tokens
