@@ -12,8 +12,9 @@ export default async function handler(req, res) {
 
   const { ML_APP_ID, ML_CLIENT_SECRET, ML_REDIRECT_URI } = process.env;
   if (!ML_APP_ID || !ML_CLIENT_SECRET) {
-    return res.status(500).json({ success: false, error: 'ML_APP_ID / ML_CLIENT_SECRET nao configurados na Vercel.' });
+    return res.status(500).json({ success: false, error: 'ML_APP_ID / ML_CLIENT_SECRET nao configurados na Vercel (cadastre e faca Redeploy).' });
   }
+  const redirect = ML_REDIRECT_URI || redirectUri;
 
   try {
     const tokenRes = await fetch(`${API}/oauth/token`, {
@@ -24,20 +25,26 @@ export default async function handler(req, res) {
         client_id: ML_APP_ID,
         client_secret: ML_CLIENT_SECRET,
         code,
-        redirect_uri: ML_REDIRECT_URI || redirectUri
+        redirect_uri: redirect
       })
     });
     const tok = await tokenRes.json();
     if (!tokenRes.ok) {
-      return res.status(400).json({ success: false, error: tok.message || tok.error || 'Falha ao trocar o code por token.' });
+      return res.status(400).json({
+        success: false,
+        error: `${tok.message || 'Falha ao trocar o code por token'} [${tok.error || tokenRes.status}]. redirect_uri enviado: ${redirect}`
+      });
     }
 
     const meRes = await fetch(`${API}/users/me`, { headers: { Authorization: `Bearer ${tok.access_token}` } });
     const me = await meRes.json();
+    if (!meRes.ok) {
+      return res.status(400).json({ success: false, error: `Token obtido, mas nao consegui ler a conta: ${me.message || meRes.status}` });
+    }
     const rep = me.seller_reputation || {};
     const m = rep.metrics || {};
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       store: {
         id: String(tok.user_id),
@@ -54,6 +61,6 @@ export default async function handler(req, res) {
       }
     });
   } catch (e) {
-    res.status(500).json({ success: false, error: e.message });
+    return res.status(500).json({ success: false, error: e.message });
   }
 }

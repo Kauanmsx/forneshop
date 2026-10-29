@@ -711,32 +711,37 @@ export default function App() {
   }, [salesRecords]);
 
   // Processa automaticamente o retorno do redirecionamento OAuth do Mercado Livre (?code=...)
+  // Retorno do OAuth do Mercado Livre (?code=...): troca o code por token e carrega os dados da loja
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const oauthCode = params.get('code');
+    if (!oauthCode) return;
 
-    if (oauthCode) {
-      window.history.replaceState({}, document.title, window.location.pathname);
-      setActiveMenu('integracoes');
-      fetch('/api/ml-oauth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          code: oauthCode,
-          redirectUri: `${window.location.origin}/`
-        })
+    window.history.replaceState({}, document.title, window.location.pathname);
+    setActiveMenu('integracoes');
+
+    // o code do Mercado Livre so vale uma vez
+    try {
+      if (sessionStorage.getItem('ml_code_used') === oauthCode) return;
+      sessionStorage.setItem('ml_code_used', oauthCode);
+    } catch (e) {}
+
+    fetch('/api/ml-oauth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: oauthCode, redirectUri: `${window.location.origin}/` })
+    })
+      .then(async (r) => {
+        let data = {};
+        try { data = await r.json(); } catch (e) {}
+        if (data.success && data.store) {
+          setMlStores(prev => [...prev.filter(s => s.id !== data.store.id), data.store]);
+          showToast(`Sua conta do Mercado Livre (${data.store.nickname}) foi conectada!`);
+        } else {
+          alert('Mercado Livre: ' + (data.error || `o servidor respondeu ${r.status} sem detalhes. Confira se /api/ml-oauth esta publicado.`));
+        }
       })
-        .then(r => r.json())
-        .then(data => {
-          if (data.success && data.store) {
-            setMlStores(prev => [...prev.filter(s => s.id !== data.store.id), data.store]);
-            showToast(`Sua conta do Mercado Livre (${data.store.nickname}) foi conectada!`);
-          } else {
-            showToast(data.error || 'Nao foi possivel conectar o Mercado Livre.');
-          }
-        })
-        .catch(() => showToast('Falha de rede ao conectar o Mercado Livre.'));
-    }
+      .catch(() => alert('Mercado Livre: falha de rede ao conectar a loja.'));
   }, []);
 
   // Redirecionamento DIRETO para o Mercado Livre (Sem abrir modal de Token para o cliente!)
