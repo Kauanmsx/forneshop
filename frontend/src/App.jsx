@@ -2768,11 +2768,7 @@ export default function App() {
     setAuthError('');
     setLoading(true);
 
-        const cleanEmail = loginEmail.trim().toLowerCase();
-    const cleanPass = loginPassword.trim();
-    const cleanEmail = loginEmail.trim().toLowerCase();
-    const cleanPass = loginPassword.trim().toUpperCase();
-    const expectedPass = generateDeterministicPassword(cleanEmail);
+        
 
     if (cleanPass === expectedPass) {
       const activeUser = {
@@ -4365,6 +4361,7 @@ export default function App() {
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
 
 
 
