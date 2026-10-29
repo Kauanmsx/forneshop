@@ -19,6 +19,10 @@ const generateDeterministicPassword = (emailStr) => {
 };
 // ================================
 
+import { ShoppingCart } from 'lucide-react';
+
+
+
 
 
 
@@ -2378,6 +2382,7 @@ export default function App() {
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
 
 
 
