@@ -873,6 +873,7 @@ export default function App() {
 
     setAuthError('Acesso negado: Você precisa adquirir um plano para receber seu login e senha exclusiva por e-mail.');
     setLoading(false);
+    setLoading(false);
   };
 
   const handleLogout = () => {
@@ -2529,6 +2530,7 @@ return (
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
 
 
 
