@@ -773,7 +773,10 @@ export default function App() {
   
 
       const handleLogin = (e) => {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
+
     const cleanEmail = String(loginEmail || '').trim().toLowerCase();
     const cleanPass = String(loginPassword || '').trim().toUpperCase();
 
@@ -784,13 +787,15 @@ export default function App() {
     }
 
     const expectedPass = generateDeterministicPassword(cleanEmail);
-    if (cleanPass === expectedPass || cleanPass.startsWith('FS')) {
+
+    if (cleanPass === String(expectedPass || '').trim().toUpperCase() || cleanPass.startsWith('FS')) {
       const activeUser = {
         name: cleanEmail.split('@')[0],
         email: cleanEmail,
         role: 'subscriber',
         plan: 'vitalicio'
       };
+
       localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
       localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
       setCurrentUser(activeUser);
@@ -2331,6 +2336,7 @@ return (
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
 
 
 
