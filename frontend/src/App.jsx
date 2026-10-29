@@ -396,21 +396,819 @@ export default function App() {
 
   // Controle da Tela Inicial: O cliente entra direto na tela de compra sem opção de burlar
   const [showSubscriberLogin, setShowSubscriberLogin] = useState(false);
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [selectedPlan, setSelectedPlan] = useState('vitalicio');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [buyerName, setBuyerName] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [buyerEmail, setBuyerEmail] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [loginEmail, setLoginEmail] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [loginPassword, setLoginPassword] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [authError, setAuthError] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [loading, setLoading] = useState(false);
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
 
   // Navegação Interna
   const [activeMenu, setActiveMenu] = useState('dashboard');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [searchTerm, setSearchTerm] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [selectedCategory, setSelectedCategory] = useState('Todas');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [selectedSupplierFilter, setSelectedSupplierFilter] = useState('Todos');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [toast, setToast] = useState(null);
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
 
   // Lojas do Mercado Livre Conectadas via Redirecionamento Direto OAuth
   const [mlStores, setMlStores] = useState(() => {
@@ -418,6 +1216,63 @@ export default function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const [redirectingToMl, setRedirectingToMl] = useState(false);
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
 
   // Anúncios e Vendas
   const [publishedAds, setPublishedAds] = useState(() => {
@@ -431,24 +1286,993 @@ export default function App() {
 
   // Simulador do Dashboard
   const [simProductId, setSimProductId] = useState(CATALOG_PRODUCTS[0].id);
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [simPrice, setSimPrice] = useState(CATALOG_PRODUCTS[0].suggestedPrice);
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [simListingType, setSimListingType] = useState('gold_special');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [simPaymentMethod, setSimPaymentMethod] = useState('credit_card');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
 
   // Modal de Publicação de Produto no Mercado Livre
   const [publishModalProduct, setPublishModalProduct] = useState(null);
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [pubTitle, setPubTitle] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [pubPrice, setPubPrice] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [pubStock, setPubStock] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [pubCategory, setPubCategory] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [pubListingType, setPubListingType] = useState('gold_special');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [pubPaymentMethod, setPubPaymentMethod] = useState('credit_card');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [pubBrand, setPubBrand] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [pubModel, setPubModel] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [pubEan, setPubEan] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [pubWarranty, setPubWarranty] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [pubDescription, setPubDescription] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [publishing, setPublishing] = useState(false);
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
 
   // Mercado Pago do Lojista
   const [mpPublicKey, setMpPublicKey] = useState(() => localStorage.getItem('forneshop_mp_pub') || '');
@@ -456,8 +2280,179 @@ export default function App() {
 
   // Painel Admin Master (Exclusivo para o dono do SaaS gerar e testar credenciais de clientes)
   const [adminClientName, setAdminClientName] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [adminClientEmail, setAdminClientEmail] = useState('');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [adminClientPlan, setAdminClientPlan] = useState('Acesso Vitalício PRO');
+  // === AUTO-UNLOCK CAKTO START ===
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isApproved =
+      params.get('pagamento') === 'aprovado' ||
+      params.get('status') === 'approved' ||
+      window.location.pathname.toLowerCase().includes('/acesso');
+
+    if (isApproved) {
+      setTimeout(() => {
+        const pending = JSON.parse(localStorage.getItem('forneshop_pending_buyer') || 'null');
+        let targetEmail = params.get('email') || (pending && pending.email);
+
+        if (!targetEmail) {
+          targetEmail = window.prompt('🎉 PAGAMENTO APROVADO!\n\nDigite abaixo o e-mail que você usou na compra para gerar sua Senha Exclusiva e liberar seu painel agora:');
+        }
+
+        if (targetEmail && targetEmail.trim()) {
+          const cleanTarget = targetEmail.trim().toLowerCase();
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanTarget, mode: 'post_checkout' })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.valid) {
+                const sessionUser = {
+                  ...data.user,
+                  role: 'subscriber',
+                  plan: 'vitalicio'
+                };
+                localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
+                localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
+
+                const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
+                if (!paidList.find(u => u.email === cleanTarget)) {
+                  paidList.push({
+                    name: sessionUser.name,
+                    email: cleanTarget,
+                    password: data.generatedPassword,
+                    plan: 'vitalicio',
+                    createdAt: new Date().toISOString()
+                  });
+                  localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
+                }
+
+                alert(`🚀 ACESSO LIBERADO COM SUCESSO!\n\nAnote suas credenciais definitivas:\n📧 E-mail: ${cleanTarget}\n🔑 Senha Exclusiva: ${data.generatedPassword}\n\nClique em OK para entrar no seu painel!`);
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {});
+        }
+      }, 400);
+    }
+  }, []);
+  // === AUTO-UNLOCK CAKTO END ===
   const [adminGeneratedList, setAdminGeneratedList] = useState(() => {
     const saved = localStorage.getItem('forneshop_paid_users');
     return saved ? JSON.parse(saved) : [];
@@ -2114,4 +4109,5 @@ export default function App() {
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
 
