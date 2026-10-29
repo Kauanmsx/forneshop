@@ -875,6 +875,38 @@ export default function App() {
     setLoading(false);
   };
 
+    const handleLogin = (e) => {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    
+    const cleanEmail = String(loginEmail || '').trim().toLowerCase();
+    const cleanPass = String(loginPassword || '').trim().toUpperCase();
+
+    if (!cleanEmail || !cleanPass) {
+      alert('Por favor, preencha o e-mail e a senha.');
+      setLoading(false);
+      return;
+    }
+
+    const expectedPass = generateDeterministicPassword(cleanEmail);
+
+    if (cleanPass === expectedPass || cleanPass.startsWith('FS')) {
+      const activeUser = {
+        name: cleanEmail.split('@')[0],
+        email: cleanEmail,
+        role: 'subscriber',
+        plan: 'vitalicio'
+      };
+      
+      localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
+      localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
+      setCurrentUser(activeUser);
+      setLoading(false);
+    } else {
+      setLoading(false);
+      alert('Chave/Senha incorreta. Utilize a senha exclusiva gerada na compra.');
+    }
+  };
+
   const handleLogout = () => {
     setCurrentUser(null);
     localStorage.removeItem('forneshop_active_session');
@@ -1043,27 +1075,7 @@ export default function App() {
     const planPrice = selectedPlan === 'vitalicio' ? 'R$ 197,00' : 'R$ 150,00';
     const planPeriod = selectedPlan === 'vitalicio' ? '/único' : '/mês';
 
-      const handleLogin = (e) => {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
-    
-    const cleanEmail = String(loginEmail || '').trim().toLowerCase();
-    const cleanPass = String(loginPassword || '').trim().toUpperCase();
-
-    if (!cleanEmail || !cleanPass) {
-      alert('Por favor, preencha o e-mail e a senha.');
-      setLoading(false);
-      return;
-    }
-
-    const expectedPass = generateDeterministicPassword(cleanEmail);
-
-    if (cleanPass === expectedPass || cleanPass.startsWith('FS')) {
-      const activeUser = {
-        name: cleanEmail.split('@')[0],
-        email: cleanEmail,
-        role: 'subscriber',
-        plan: 'vitalicio'
-      };
+      
       
       localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
       localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
@@ -1335,27 +1347,7 @@ return (
     ? calculateItemFinancials(pubPrice, publishModalProduct.cost, pubListingType, pubPaymentMethod)
     : null;
 
-    const handleLogin = (e) => {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
     
-    const cleanEmail = String(loginEmail || '').trim().toLowerCase();
-    const cleanPass = String(loginPassword || '').trim().toUpperCase();
-
-    if (!cleanEmail || !cleanPass) {
-      alert('Por favor, preencha o e-mail e a senha.');
-      setLoading(false);
-      return;
-    }
-
-    const expectedPass = generateDeterministicPassword(cleanEmail);
-
-    if (cleanPass === expectedPass || cleanPass.startsWith('FS')) {
-      const activeUser = {
-        name: cleanEmail.split('@')[0],
-        email: cleanEmail,
-        role: 'subscriber',
-        plan: 'vitalicio'
-      };
       
       localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
       localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
@@ -1587,27 +1579,7 @@ return (
           {navItems.map(item => {
             const Icon = item.icon;
             const active = activeMenu === item.id;
-              const handleLogin = (e) => {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
-    
-    const cleanEmail = String(loginEmail || '').trim().toLowerCase();
-    const cleanPass = String(loginPassword || '').trim().toUpperCase();
-
-    if (!cleanEmail || !cleanPass) {
-      alert('Por favor, preencha o e-mail e a senha.');
-      setLoading(false);
-      return;
-    }
-
-    const expectedPass = generateDeterministicPassword(cleanEmail);
-
-    if (cleanPass === expectedPass || cleanPass.startsWith('FS')) {
-      const activeUser = {
-        name: cleanEmail.split('@')[0],
-        email: cleanEmail,
-        role: 'subscriber',
-        plan: 'vitalicio'
-      };
+              
       
       localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
       localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
@@ -1975,27 +1947,7 @@ return (
                   const itemCalc = calculateItemFinancials(product.suggestedPrice, product.cost, 'gold_special', 'credit_card');
                   const alreadyPublishedCount = publishedAds.filter(a => a.id === product.id).length;
 
-                    const handleLogin = (e) => {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
-    
-    const cleanEmail = String(loginEmail || '').trim().toLowerCase();
-    const cleanPass = String(loginPassword || '').trim().toUpperCase();
-
-    if (!cleanEmail || !cleanPass) {
-      alert('Por favor, preencha o e-mail e a senha.');
-      setLoading(false);
-      return;
-    }
-
-    const expectedPass = generateDeterministicPassword(cleanEmail);
-
-    if (cleanPass === expectedPass || cleanPass.startsWith('FS')) {
-      const activeUser = {
-        name: cleanEmail.split('@')[0],
-        email: cleanEmail,
-        role: 'subscriber',
-        plan: 'vitalicio'
-      };
+                    
       
       localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
       localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
@@ -2094,27 +2046,7 @@ return (
               <div className="grid gap-4 md:grid-cols-2">
                 {SUPPLIERS.map(sup => {
                   const linkedProducts = CATALOG_PRODUCTS.filter(p => p.supplierId === sup.id);
-                    const handleLogin = (e) => {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
-    
-    const cleanEmail = String(loginEmail || '').trim().toLowerCase();
-    const cleanPass = String(loginPassword || '').trim().toUpperCase();
-
-    if (!cleanEmail || !cleanPass) {
-      alert('Por favor, preencha o e-mail e a senha.');
-      setLoading(false);
-      return;
-    }
-
-    const expectedPass = generateDeterministicPassword(cleanEmail);
-
-    if (cleanPass === expectedPass || cleanPass.startsWith('FS')) {
-      const activeUser = {
-        name: cleanEmail.split('@')[0],
-        email: cleanEmail,
-        role: 'subscriber',
-        plan: 'vitalicio'
-      };
+                    
       
       localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
       localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
@@ -2529,6 +2461,7 @@ return (
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
 
 
 
