@@ -730,10 +730,12 @@ export default function App() {
         .then(data => {
           if (data.success && data.store) {
             setMlStores(prev => [...prev.filter(s => s.id !== data.store.id), data.store]);
-            showToast(`Sua conta do Mercado Livre (${data.store.nickname}) foi conectada automaticamente!`);
+            showToast(`Sua conta do Mercado Livre (${data.store.nickname}) foi conectada!`);
+          } else {
+            showToast(data.error || 'Nao foi possivel conectar o Mercado Livre.');
           }
         })
-        .catch(() => {});
+        .catch(() => showToast('Falha de rede ao conectar o Mercado Livre.'));
     }
   }, []);
 
@@ -743,15 +745,15 @@ export default function App() {
     try {
       const res = await fetch('/api/ml-auth-url');
       const data = await res.json();
-
       if (data && data.url) {
         window.location.href = data.url;
         return;
       }
-    } catch (err) {}
-
-    // Fallback instantâneo caso esteja rodando local sem serverless
-    window.location.href = `${window.location.origin}/?code=TG-ML-${Date.now()}`;
+      showToast((data && data.error) || 'Nao foi possivel iniciar a conexao com o Mercado Livre.');
+    } catch (err) {
+      showToast('Erro ao falar com o servidor. Confira as variaveis ML_APP_ID e ML_CLIENT_SECRET na Vercel.');
+    }
+    setRedirectingToMl(false);
   };
 
   // Checkout Oficial na Cakto
@@ -892,6 +894,7 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           accessToken: activeStore.accessToken,
+          refreshToken: activeStore.refreshToken,
           item: {
             title: pubTitle,
             price: Number(pubPrice),
@@ -909,8 +912,16 @@ export default function App() {
       });
 
       const data = await res.json();
-      const mlbId = data.mlbId || ('MLB' + Math.floor(1000000000 + Math.random() * 9000000000));
-      const permalink = data.permalink || `https://produto.mercadolivre.com.br/${mlbId}`;
+      if (data.tokens) {
+        setMlStores(prev => prev.map(s => s.id === activeStore.id ? { ...s, ...data.tokens } : s));
+      }
+      if (!res.ok || !data.mlbId) {
+        setPublishing(false);
+        showToast(data.error || 'O Mercado Livre recusou o anuncio.');
+        return;
+      }
+      const mlbId = data.mlbId;
+      const permalink = data.permalink;
 
       const newAd = {
         id: publishModalProduct.id,
@@ -942,6 +953,7 @@ export default function App() {
       showToast(`Anúncio ${mlbId} publicado no Mercado Livre na loja ${activeStore.nickname}!`);
     } catch (err) {
       setPublishing(false);
+      showToast('Erro de rede ao publicar no Mercado Livre.');
     }
   };
 
