@@ -24,7 +24,10 @@ async function refreshAccessToken(refreshToken) {
 }
 
 export default async function handler(req, res) {
+  // Checagem de versao: abra /api/ml-publish no navegador
+  if (req.method === 'GET') return res.status(200).json({ version: 'up-v2' });
   if (req.method !== 'POST') return res.status(405).json({ error: 'Metodo nao permitido' });
+
   const { accessToken, refreshToken, item } = req.body || {};
   if (!accessToken || !item) return res.status(400).json({ error: 'accessToken e item sao obrigatorios' });
 
@@ -53,7 +56,6 @@ export default async function handler(req, res) {
   };
 
   try {
-    // Categoria "folha" descoberta pelo titulo
     let categoryId = item.categoryId;
     try {
       const d = await ml(`/sites/MLB/domain_discovery/search?limit=1&q=${encodeURIComponent(item.title)}`);
@@ -66,7 +68,11 @@ export default async function handler(req, res) {
     if (item.model) attributes.push({ id: 'MODEL', value_name: item.model });
     if (validGtin(item.ean)) attributes.push({ id: 'GTIN', value_name: String(item.ean).replace(/\D/g, '') });
 
-    const baseBody = {
+    const familyName = String(item.title || '').trim().slice(0, 60);
+
+    // User Products: family_name obrigatorio, SEM title
+    const body = {
+      family_name: familyName,
       category_id: categoryId,
       price: Number(item.price),
       currency_id: 'BRL',
@@ -82,26 +88,13 @@ export default async function handler(req, res) {
       ]
     };
 
-    const name = String(item.title).slice(0, 60);
-    const send = (extra) => ml('/items', { method: 'POST', body: JSON.stringify({ ...baseBody, ...extra }) });
-
-    // Modelo novo (User Products): family_name, sem title
-    let created = await send({ family_name: name });
-    let data = await created.json();
-
-    // Conta ainda no modelo antigo: tenta com title
-    if (!created.ok) {
-      const txt = JSON.stringify(data);
-      if (/title/i.test(txt) && !/family_name/i.test(txt)) {
-        created = await send({ title: name });
-        data = await created.json();
-      }
-    }
+    const created = await ml('/items', { method: 'POST', body: JSON.stringify(body) });
+    const data = await created.json();
 
     if (!created.ok) {
       const causes = (data.cause || []).map((c) => c.message).filter(Boolean).join(' | ');
       return res.status(400).json({
-        error: `${data.message || 'Erro ao publicar'}${causes ? ': ' + causes : ''}`,
+        error: `${data.message || 'Erro ao publicar'}${causes ? ' | ' + causes : ''} (categoria ${categoryId}, family_name "${familyName}")`,
         tokens
       });
     }
