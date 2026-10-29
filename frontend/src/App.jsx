@@ -440,7 +440,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -457,13 +456,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -482,6 +474,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [selectedPlan, setSelectedPlan] = useState('vitalicio');
   // === AUTO-UNLOCK CAKTO START ===
@@ -528,7 +521,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -545,13 +537,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -570,6 +555,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [buyerName, setBuyerName] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -616,7 +602,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -633,13 +618,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -658,6 +636,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [buyerEmail, setBuyerEmail] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -704,7 +683,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -721,13 +699,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -746,6 +717,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [loginEmail, setLoginEmail] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -792,7 +764,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -809,13 +780,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -834,6 +798,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [loginPassword, setLoginPassword] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -880,7 +845,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -897,13 +861,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -922,6 +879,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [authError, setAuthError] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -968,7 +926,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -985,13 +942,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1010,6 +960,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [loading, setLoading] = useState(false);
   // === AUTO-UNLOCK CAKTO START ===
@@ -1056,7 +1007,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -1073,13 +1023,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1098,6 +1041,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
 
   // Navegação Interna
@@ -1146,7 +1090,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -1163,13 +1106,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1188,6 +1124,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [searchTerm, setSearchTerm] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -1234,7 +1171,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -1251,13 +1187,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1276,6 +1205,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   // === AUTO-UNLOCK CAKTO START ===
@@ -1322,7 +1252,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -1339,13 +1268,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1364,6 +1286,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [selectedSupplierFilter, setSelectedSupplierFilter] = useState('Todos');
   // === AUTO-UNLOCK CAKTO START ===
@@ -1410,7 +1333,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -1427,13 +1349,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1452,6 +1367,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [toast, setToast] = useState(null);
   // === AUTO-UNLOCK CAKTO START ===
@@ -1498,7 +1414,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -1515,13 +1430,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1540,6 +1448,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   // === AUTO-UNLOCK CAKTO START ===
@@ -1586,7 +1495,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -1603,13 +1511,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1628,6 +1529,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
 
   // Lojas do Mercado Livre Conectadas via Redirecionamento Direto OAuth
@@ -1680,7 +1582,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -1697,13 +1598,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1722,6 +1616,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
 
   // Anúncios e Vendas
@@ -1780,7 +1675,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -1797,13 +1691,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1822,6 +1709,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [simPrice, setSimPrice] = useState(CATALOG_PRODUCTS[0].suggestedPrice);
   // === AUTO-UNLOCK CAKTO START ===
@@ -1868,7 +1756,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -1885,13 +1772,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1910,6 +1790,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [simListingType, setSimListingType] = useState('gold_special');
   // === AUTO-UNLOCK CAKTO START ===
@@ -1956,7 +1837,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -1973,13 +1853,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -1998,6 +1871,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [simPaymentMethod, setSimPaymentMethod] = useState('credit_card');
   // === AUTO-UNLOCK CAKTO START ===
@@ -2044,7 +1918,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -2061,13 +1934,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -2086,6 +1952,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
 
   // Modal de Publicação de Produto no Mercado Livre
@@ -2134,7 +2001,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -2151,13 +2017,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -2176,6 +2035,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [pubTitle, setPubTitle] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -2222,7 +2082,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -2239,13 +2098,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -2264,6 +2116,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [pubPrice, setPubPrice] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -2310,7 +2163,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -2327,13 +2179,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -2352,6 +2197,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [pubStock, setPubStock] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -2398,7 +2244,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -2415,13 +2260,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -2440,6 +2278,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [pubCategory, setPubCategory] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -2486,7 +2325,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -2503,13 +2341,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -2528,6 +2359,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [pubListingType, setPubListingType] = useState('gold_special');
   // === AUTO-UNLOCK CAKTO START ===
@@ -2574,7 +2406,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -2591,13 +2422,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -2616,6 +2440,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [pubPaymentMethod, setPubPaymentMethod] = useState('credit_card');
   // === AUTO-UNLOCK CAKTO START ===
@@ -2662,7 +2487,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -2679,13 +2503,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -2704,6 +2521,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [pubBrand, setPubBrand] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -2750,7 +2568,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -2767,13 +2584,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -2792,6 +2602,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [pubModel, setPubModel] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -2838,7 +2649,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -2855,13 +2665,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -2880,6 +2683,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [pubEan, setPubEan] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -2926,7 +2730,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -2943,13 +2746,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -2968,6 +2764,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [pubWarranty, setPubWarranty] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -3014,7 +2811,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -3031,13 +2827,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -3056,6 +2845,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [pubDescription, setPubDescription] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -3102,7 +2892,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -3119,13 +2908,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -3144,6 +2926,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [publishing, setPublishing] = useState(false);
   // === AUTO-UNLOCK CAKTO START ===
@@ -3190,7 +2973,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -3207,13 +2989,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -3232,6 +3007,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
 
   // Mercado Pago do Lojista
@@ -3284,7 +3060,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -3301,13 +3076,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -3326,6 +3094,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [adminClientEmail, setAdminClientEmail] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
@@ -3372,7 +3141,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -3389,13 +3157,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -3414,6 +3175,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [adminClientPlan, setAdminClientPlan] = useState('Acesso Vitalício PRO');
   // === AUTO-UNLOCK CAKTO START ===
@@ -3460,7 +3222,6 @@ export default function App() {
             plan: 'vitalicio'
           };
 
-          // Salva na lista de usuários pagos e na sessão ativa
           const paidList = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
           const existingIdx = paidList.findIndex(u => String(u.email).toLowerCase() === cleanTarget);
           if (existingIdx >= 0) {
@@ -3477,13 +3238,6 @@ export default function App() {
           localStorage.setItem('forneshop_paid_users', JSON.stringify(paidList));
           localStorage.setItem('forneshop_active_session', JSON.stringify(sessionUser));
           localStorage.setItem('forneshop_user', JSON.stringify(sessionUser));
-
-          // Dispara também em segundo plano para a API (caso exista)
-          fetch('/api/cakto-webhook', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'paid', customer: { name: userName, email: cleanTarget } })
-          }).catch(() => {});
 
           window.alert(
             `🚀 CREDENCIAIS GERADAS COM SUCESSO!\n\n` +
@@ -3502,6 +3256,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   const [adminGeneratedList, setAdminGeneratedList] = useState(() => {
     const saved = localStorage.getItem('forneshop_paid_users');
@@ -5170,6 +4925,7 @@ export default function App() {
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
 
 
 
