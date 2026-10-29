@@ -4,7 +4,7 @@
 
 npm.cmd : [33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more 
 details.[39m
-No linha:6 caractere:11
+No linha:11 caractere:11
 + $output = & npm.cmd run build 2>&1
 +           ~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: ([33mThe CJS bu...e details.[39m:String) [], RemoteException
@@ -13,19 +13,19 @@ No linha:6 caractere:11
 [36mvite v5.4.21 [32mbuilding for production...[36m[39m
 transforming...
 [32mÔ£ô[39m 3 modules transformed.
-[31mx[39m Build failed in 319ms
+[31mx[39m Build failed in 313ms
 [31merror during build:
 [31m[vite:esbuild] Transform failed with 1 error:
-C:/Users/SnyX/Downloads/FORNEDROP/frontend/src/App.jsx:1459:6: ERROR: Expected ")" but found "else"[31m
-file: [36mC:/Users/SnyX/Downloads/FORNEDROP/frontend/src/App.jsx:1459:6[31m
+C:/Users/SnyX/Downloads/FORNEDROP/frontend/src/App.jsx:1463:6: ERROR: Expected ")" but found "else"[31m
+file: [36mC:/Users/SnyX/Downloads/FORNEDROP/frontend/src/App.jsx:1463:6[31m
 [33m
 [33mExpected ")" but found "else"[33m
-1457|        setCurrentUser(activeUser);
-1458|        setLoading(false);
-1459|      } else {
+1461|        setCurrentUser(activeUser);
+1462|        setLoading(false);
+1463|      } else {
    |        ^
-1460|        setLoading(false);
-1461|        alert('Chave/Senha incorreta. Utilize a senha exclusiva gerada na compra.');
+1464|        setLoading(false);
+1465|        alert('Chave/Senha incorreta. Utilize a senha exclusiva gerada na compra.');
 [31m
     at failureErrorWithLog (C:\Users\SnyX\Downloads\FORNEDROP\frontend\node_modules\esbuild\lib\main.js:1472:15)
     at C:\Users\SnyX\Downloads\FORNEDROP\frontend\node_modules\esbuild\lib\main.js:755:50

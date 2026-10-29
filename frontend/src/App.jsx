@@ -1,4 +1,4 @@
-﻿// === AUTO-UNLOCK CAKTO HELPER ===
+// === AUTO-UNLOCK CAKTO HELPER ===
 const generateDeterministicPassword = (emailStr) => {
   try {
     const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
@@ -772,10 +772,11 @@ export default function App() {
 
   
 
-      const handleLogin = (e) => {
-    if (e && typeof e.preventDefault === 'function') {
-      e.preventDefault();
-    }
+      
+
+    const handleLogin = (e) => {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    setLoading(true);
 
     const cleanEmail = String(loginEmail || '').trim().toLowerCase();
     const cleanPass = String(loginPassword || '').trim().toUpperCase();
@@ -788,7 +789,7 @@ export default function App() {
 
     const expectedPass = generateDeterministicPassword(cleanEmail);
 
-    if (cleanPass === String(expectedPass || '').trim().toUpperCase() || cleanPass.startsWith('FS')) {
+    if (cleanPass === String(expectedPass || '').trim().toUpperCase()) {
       const activeUser = {
         name: cleanEmail.split('@')[0],
         email: cleanEmail,
@@ -974,6 +975,7 @@ export default function App() {
     const planPrice = selectedPlan === 'vitalicio' ? 'R$ 197,00' : 'R$ 150,00';
     const planPeriod = selectedPlan === 'vitalicio' ? '/único' : '/mês';
 
+        
       return (
       <div className="min-h-screen bg-[#0d0f14] text-zinc-100 flex flex-col items-center justify-center px-4 py-10">
         <div className="text-center mb-8">
@@ -1234,7 +1236,8 @@ export default function App() {
     ? calculateItemFinancials(pubPrice, publishModalProduct.cost, pubListingType, pubPaymentMethod)
     : null;
 
-  return (
+    
+      return (
     <div className="min-h-screen bg-[#0b0c10] text-zinc-100">
       {toast && (
         <div className="fixed bottom-5 right-5 z-50 bg-emerald-600 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs font-semibold border border-emerald-400/30 max-w-md">
@@ -1456,17 +1459,8 @@ export default function App() {
             const active = activeMenu === item.id;
               
       
-      localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
-      localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
-      setCurrentUser(activeUser);
-      setLoading(false);
-    } else {
-      setLoading(false);
-      alert('Chave/Senha incorreta. Utilize a senha exclusiva gerada na compra.');
-    }
-  };
-
-return (
+        
+      return (
               <button
                 key={item.id}
                 onClick={() => setActiveMenu(item.id)}
@@ -1824,17 +1818,7 @@ return (
 
                     
       
-      localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
-      localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
-      setCurrentUser(activeUser);
-      setLoading(false);
-    } else {
-      setLoading(false);
-      alert('Chave/Senha incorreta. Utilize a senha exclusiva gerada na compra.');
-    }
-  };
-
-return (
+      return (
                     <div key={product.id} className="flex flex-col justify-between rounded-2xl border border-zinc-800/90 bg-[#12141c] p-4 hover:border-zinc-700 transition-all">
                       <div>
                         <div className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-xl bg-white p-2">
@@ -1923,17 +1907,7 @@ return (
                   const linkedProducts = CATALOG_PRODUCTS.filter(p => p.supplierId === sup.id);
                     
       
-      localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
-      localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
-      setCurrentUser(activeUser);
-      setLoading(false);
-    } else {
-      setLoading(false);
-      alert('Chave/Senha incorreta. Utilize a senha exclusiva gerada na compra.');
-    }
-  };
-
-return (
+      return (
                     <div key={sup.id} className="rounded-2xl border border-zinc-800 bg-[#12141c] p-5 flex flex-col justify-between">
                       <div>
                         <div className="flex items-start justify-between">
@@ -2336,6 +2310,9 @@ return (
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
+
+
 
 
 
