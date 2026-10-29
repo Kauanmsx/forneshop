@@ -1,4 +1,21 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿// === AUTO-UNLOCK CAKTO HELPER ===
+const generateDeterministicPassword = (emailStr) => {
+  const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
+  let h1 = 0xdeadbeef ^ clean.length;
+  let h2 = 0x41c6ce57 ^ clean.length;
+  for (let i = 0, ch; i < clean.length; i++) {
+    ch = clean.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
+  return 'FS' + hex.slice(0, 6);
+};
+// ================================
+
+import React, { useState, useEffect } from 'react';
 import {
   Flame, Boxes, Package, Megaphone, ShoppingCartcheckoutUrl,
   Wallet, Plug, Store, Settings, Search,
@@ -397,21 +414,6 @@ export default function App() {
   // Controle da Tela Inicial: O cliente entra direto na tela de compra sem opção de burlar
   const [showSubscriberLogin, setShowSubscriberLogin] = useState(false);
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -474,25 +476,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [selectedPlan, setSelectedPlan] = useState('vitalicio');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -555,25 +543,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [buyerName, setBuyerName] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -636,25 +610,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [buyerEmail, setBuyerEmail] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -717,25 +677,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [loginEmail, setLoginEmail] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -798,25 +744,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [loginPassword, setLoginPassword] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -879,25 +811,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [authError, setAuthError] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -960,25 +878,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [loading, setLoading] = useState(false);
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1041,27 +945,13 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
 
   // Navegação Interna
   const [activeMenu, setActiveMenu] = useState('dashboard');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1124,25 +1014,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [searchTerm, setSearchTerm] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1205,25 +1081,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1286,25 +1148,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [selectedSupplierFilter, setSelectedSupplierFilter] = useState('Todos');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1367,25 +1215,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [toast, setToast] = useState(null);
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1448,25 +1282,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1529,6 +1349,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
 
@@ -1539,21 +1360,6 @@ export default function App() {
   });
   const [redirectingToMl, setRedirectingToMl] = useState(false);
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1616,6 +1422,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
 
@@ -1632,21 +1439,6 @@ export default function App() {
   // Simulador do Dashboard
   const [simProductId, setSimProductId] = useState(CATALOG_PRODUCTS[0].id);
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1709,25 +1501,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [simPrice, setSimPrice] = useState(CATALOG_PRODUCTS[0].suggestedPrice);
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1790,25 +1568,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [simListingType, setSimListingType] = useState('gold_special');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1871,25 +1635,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [simPaymentMethod, setSimPaymentMethod] = useState('credit_card');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -1952,27 +1702,13 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
 
   // Modal de Publicação de Produto no Mercado Livre
   const [publishModalProduct, setPublishModalProduct] = useState(null);
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2035,25 +1771,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [pubTitle, setPubTitle] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2116,25 +1838,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [pubPrice, setPubPrice] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2197,25 +1905,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [pubStock, setPubStock] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2278,25 +1972,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [pubCategory, setPubCategory] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2359,25 +2039,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [pubListingType, setPubListingType] = useState('gold_special');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2440,25 +2106,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [pubPaymentMethod, setPubPaymentMethod] = useState('credit_card');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2521,25 +2173,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [pubBrand, setPubBrand] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2602,25 +2240,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [pubModel, setPubModel] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2683,25 +2307,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [pubEan, setPubEan] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2764,25 +2374,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [pubWarranty, setPubWarranty] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2845,25 +2441,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [pubDescription, setPubDescription] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -2926,25 +2508,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [publishing, setPublishing] = useState(false);
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -3007,6 +2575,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
 
@@ -3017,21 +2586,6 @@ export default function App() {
   // Painel Admin Master (Exclusivo para o dono do SaaS gerar e testar credenciais de clientes)
   const [adminClientName, setAdminClientName] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -3094,25 +2648,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [adminClientEmail, setAdminClientEmail] = useState('');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -3175,25 +2715,11 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [adminClientPlan, setAdminClientPlan] = useState('Acesso Vitalício PRO');
   // === AUTO-UNLOCK CAKTO START ===
-  const generateDeterministicPassword = (emailStr) => {
-    const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-    let h1 = 0xdeadbeef ^ clean.length;
-    let h2 = 0x41c6ce57 ^ clean.length;
-    for (let i = 0, ch; i < clean.length; i++) {
-      ch = clean.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-    return 'FS' + hex.slice(0, 6);
-  };
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isApproved =
@@ -3256,6 +2782,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
   
   
   const [adminGeneratedList, setAdminGeneratedList] = useState(() => {
@@ -4925,6 +4452,7 @@ export default function App() {
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
 
 
 
