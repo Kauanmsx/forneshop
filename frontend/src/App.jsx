@@ -19,22 +19,9 @@ const generateDeterministicPassword = (emailStr) => {
 };
 // ================================
 
-// === AUTO-UNLOCK CAKTO HELPER ===
-const generateDeterministicPassword = (emailStr) => {
-  const clean = String(emailStr || '').trim().toLowerCase() + '|forneshop-2026';
-  let h1 = 0xdeadbeef ^ clean.length;
-  let h2 = 0x41c6ce57 ^ clean.length;
-  for (let i = 0, ch; i < clean.length; i++) {
-    ch = clean.charCodeAt(i);
-    h1 = Math.imul(h1 ^ ch, 2654435761);
-    h2 = Math.imul(h2 ^ ch, 1597334677);
-  }
-  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-  const hex = ((h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0')).toUpperCase();
-  return 'FS' + hex.slice(0, 6);
-};
-// ================================
+
+
+
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -502,6 +489,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -575,6 +563,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -648,6 +637,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -721,6 +711,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -794,6 +785,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -867,6 +859,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -940,6 +933,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1013,6 +1007,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1088,6 +1083,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1161,6 +1157,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1234,6 +1231,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1307,6 +1305,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1380,6 +1379,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1453,6 +1453,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1532,6 +1533,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1617,6 +1619,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1690,6 +1693,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1763,6 +1767,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1836,6 +1841,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1911,6 +1917,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -1984,6 +1991,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2057,6 +2065,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2130,6 +2139,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2203,6 +2213,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2276,6 +2287,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2349,6 +2361,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2422,6 +2435,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2495,6 +2509,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2568,6 +2583,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2641,6 +2657,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2714,6 +2731,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2787,6 +2805,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2866,6 +2885,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -2939,6 +2959,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -3012,6 +3033,7 @@ export default function App() {
     }
   }, []);
   // === AUTO-UNLOCK CAKTO END ===
+  
     
   
   
@@ -4697,6 +4719,7 @@ export default function App() {
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
 
 
 
