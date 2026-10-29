@@ -2875,6 +2875,24 @@ export default function App() {
 
         const cleanEmail = loginEmail.trim().toLowerCase();
     const cleanPass = loginPassword.trim();
+    const cleanEmail = loginEmail.trim().toLowerCase();
+    const cleanPass = loginPassword.trim().toUpperCase();
+    const expectedPass = generateDeterministicPassword(cleanEmail);
+
+    if (cleanPass === expectedPass) {
+      const activeUser = {
+        name: cleanEmail.split('@')[0],
+        email: cleanEmail,
+        role: 'subscriber',
+        plan: 'vitalicio'
+      };
+      setCurrentUser(activeUser);
+      localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
+      localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
+      setLoading(false);
+      showToast(`Bem-vindo(a) de volta, ${activeUser.name}!`);
+      return;
+    }
     const expectedDetPass = (typeof generateDeterministicPassword === 'function')
       ? generateDeterministicPassword(cleanEmail)
       : '';
@@ -4452,6 +4470,7 @@ export default function App() {
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
 
 
 
