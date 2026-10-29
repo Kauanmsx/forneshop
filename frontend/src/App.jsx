@@ -996,7 +996,7 @@ export default function App() {
       return (
       <div className="min-h-screen bg-[#0d0f14] text-zinc-100 flex flex-col items-center justify-center px-4 py-10">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-black tracking-tight text-white">FORNESHOP</h1>
+          <img src="/logo.png" alt="Forneshop" className="mx-auto h-16 w-auto object-contain" />
           <p className="text-sm text-blue-400 mt-1.5">
             Plataforma exclusiva de fornecedores nacionais e automação direta com o Mercado Livre
           </p>
@@ -1465,10 +1465,7 @@ export default function App() {
       {/* Sidebar Lateral */}
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 flex-col border-r border-zinc-800/80 bg-[#11131a] lg:flex">
         <div className="flex h-14 items-center justify-between border-b border-zinc-800/80 px-5">
-          <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg bg-blue-600 flex items-center justify-center font-black text-white">F</div>
-            <span className="font-bold text-base tracking-tight text-white">FORNESHOP</span>
-          </div>
+          <img src="/logo.png" alt="Forneshop" className="h-8 w-auto max-w-full object-contain" />
         </div>
         <div className="flex-1 space-y-1 overflow-y-auto p-3">
           {navItems.map(item => {
