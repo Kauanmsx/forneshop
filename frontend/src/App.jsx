@@ -18,22 +18,9 @@ const generateDeterministicPassword = (emailStr) => {
   }
 };
 // ================================
-
-import { ShoppingCart } from 'lucide-react';
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import {
-  Flame, Boxes, Package, Megaphone, ShoppingCartcheckoutUrl,
+  Flame, Boxes, Package, Megaphone, ShoppingCart,
   Wallet, Plug, Store, Settings, Search,
   Plus, RefreshCw, Trash2, CheckCircle2, AlertCircle,
   ExternalLink, CreditCard, ShieldCheck, Truck, LogOut, Menu, X,
@@ -783,100 +770,11 @@ export default function App() {
     window.location.href = caktoUrl;
   };
 
-  // Login blindado: Só entra quem recebeu a senha personalizada pós-compra (ou conta Master do dono)
   
-      setCurrentUser(activeUser);
-      localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
-      localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
-      setLoading(false);
-      showToast(`Bem-vindo(a) de volta, ${activeUser.name}!`);
-      return;
-    }
-    const expectedDetPass = (typeof generateDeterministicPassword === 'function')
-      ? generateDeterministicPassword(cleanEmail)
-      : '';
-    if (cleanPass.toUpperCase() === expectedDetPass && expectedDetPass !== '') {
-      const detUser = { name: cleanEmail.split('@')[0], email: cleanEmail, role: 'subscriber', plan: 'vitalicio' };
-      setCurrentUser(detUser);
-      localStorage.setItem('forneshop_active_session', JSON.stringify(detUser));
-      setLoading(false);
-      showToast(`Bem-vindo(a), ${detUser.name}!`);
-      return;
-    }
 
-    try {
-      const authRes = await fetch('/api/auth-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: cleanEmail, password: cleanPass })
-      });
-      if (authRes.ok) {
-        const authData = await authRes.json();
-        if (authData && authData.valid) {
-          setCurrentUser(authData.user);
-          localStorage.setItem('forneshop_active_session', JSON.stringify(authData.user));
-          setLoading(false);
-          showToast(`Bem-vindo(a), ${authData.user.name}!`);
-          return;
-        }
-      }
-    } catch (err) {}
-
-    // 1. Verifica na base local de clientes gerados pelo Webhook
-    const paidUsers = JSON.parse(localStorage.getItem('forneshop_paid_users') || '[]');
-    const localFound = paidUsers.find(u => u.email === cleanEmail && u.password === cleanPass);
-
-    if (localFound) {
-      setCurrentUser(localFound);
-      localStorage.setItem('forneshop_active_session', JSON.stringify(localFound));
-      setLoading(false);
-      showToast(`Bem-vindo(a), ${localFound.name}!`);
-      return;
-    }
-
-    // 2. Verifica na API Serverless (Validação criptográfica HMAC da compra ou Admin Master)
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: cleanEmail, password: cleanPass })
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setCurrentUser(data.user);
-        localStorage.setItem('forneshop_active_session', JSON.stringify(data.user));
-        setLoading(false);
-        showToast(`Acesso autorizado: ${data.user.name}`);
-        return;
-      } else {
-        setAuthError(data.error || 'Credenciais inválidas ou pagamento ainda não identificado.');
-        setLoading(false);
-        return;
-      }
-    } catch (err) {}
-
-    // 3. Fallback local exclusivamente para o Dono do SaaS
-    if (cleanEmail === 'admin@forneshop.com' && cleanPass === 'admin123') {
-      const masterUser = {
-        subscriberId: 'MASTER-ADMIN',
-        name: 'Kauan Marinho (CEO Forneshop)',
-        email: cleanEmail,
-        plan: 'Master SaaS Owner',
-        isAdmin: true
-      };
-      setCurrentUser(masterUser);
-      localStorage.setItem('forneshop_active_session', JSON.stringify(masterUser));
-      setLoading(false);
-      showToast('Painel Master do SaaS carregado.');
-      return;
-    }
-
-    setAuthError('Acesso negado: Você precisa adquirir um plano para receber seu login e senha exclusiva por e-mail.');
-    setLoading(false);
-  };
-
-    const handleLogin = (e) => {
+      const handleLogin = (e) => {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    
     const cleanEmail = String(loginEmail || '').trim().toLowerCase();
     const cleanPass = String(loginPassword || '').trim().toUpperCase();
 
@@ -895,6 +793,7 @@ export default function App() {
         role: 'subscriber',
         plan: 'vitalicio'
       };
+      
       localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
       localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
       setCurrentUser(activeUser);
@@ -1073,19 +972,7 @@ export default function App() {
     const planPrice = selectedPlan === 'vitalicio' ? 'R$ 197,00' : 'R$ 150,00';
     const planPeriod = selectedPlan === 'vitalicio' ? '/único' : '/mês';
 
-      
-      
-      localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
-      localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
-      setCurrentUser(activeUser);
-      setLoading(false);
-    } else {
-      setLoading(false);
-      alert('Chave/Senha incorreta. Utilize a senha exclusiva gerada na compra.');
-    }
-  };
-
-return (
+      return (
       <div className="min-h-screen bg-[#0d0f14] text-zinc-100 flex flex-col items-center justify-center px-4 py-10">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-black tracking-tight text-white">FORNESHOP</h1>
@@ -1345,19 +1232,7 @@ return (
     ? calculateItemFinancials(pubPrice, publishModalProduct.cost, pubListingType, pubPaymentMethod)
     : null;
 
-    
-      
-      localStorage.setItem('forneshop_active_session', JSON.stringify(activeUser));
-      localStorage.setItem('forneshop_user', JSON.stringify(activeUser));
-      setCurrentUser(activeUser);
-      setLoading(false);
-    } else {
-      setLoading(false);
-      alert('Chave/Senha incorreta. Utilize a senha exclusiva gerada na compra.');
-    }
-  };
-
-return (
+  return (
     <div className="min-h-screen bg-[#0b0c10] text-zinc-100">
       {toast && (
         <div className="fixed bottom-5 right-5 z-50 bg-emerald-600 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs font-semibold border border-emerald-400/30 max-w-md">
@@ -2459,6 +2334,7 @@ return (
   );
 }
 // Forçando update enterprise - 10/27/2026 23:18:48
+
 
 
 
